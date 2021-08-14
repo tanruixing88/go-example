@@ -27,6 +27,9 @@ func (this *LRUCache) Get(key int) int {
 func (this *LRUCache) Put(key int, value int)  {
 	_, ok := this.KeyMap[key]
 	if !ok {
+		if this.KeyList[this.Cap - 1] > 0 {
+			delete(this.KeyMap, this.KeyList[this.Cap - 1])
+		}
 		for i := this.Cap - 1; i > 0 ; i-- {
 			this.KeyList[i] = this.KeyList[i-1]
 		}
