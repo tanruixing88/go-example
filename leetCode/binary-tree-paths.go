@@ -78,7 +78,7 @@ func clearTree(root *TreeNode) {
 
 	for true {
 		if traceList[len(traceList)-1].TraceL && traceList[len(traceList)-1].TraceR {
-			fmt.Printf("2 clear node:%+v\r\n", curNode)
+			//fmt.Printf(" clear node:%+v\r\n", curNode)
 			curNode = nil
 			traceList = traceList[:len(traceList)-1]
 			if len(traceList) == 0 {
@@ -122,7 +122,7 @@ func main() {
 	/* only root is nil
 	*/
 	paths := binaryTreePaths(node1)
-	fmt.Printf("tree1: paths:%+v\r\n", paths)
+	fmt.Printf("tree paths:%+v\r\n", paths)
 	clearTree(node1)
 
 
@@ -132,7 +132,7 @@ func main() {
 	*/
 	node1 = &TreeNode{1, nil, nil}
 	paths = binaryTreePaths(node1)
-	fmt.Printf("tree1: paths:%+v\r\n", paths)
+	fmt.Printf("tree paths:%+v\r\n", paths)
 	clearTree(node1)
 
 	//construct binaryTree
@@ -150,7 +150,7 @@ func main() {
 	node3 = &TreeNode{3, nil, nil}
 	node1 = &TreeNode{1, node2, node3}
 	paths = binaryTreePaths(node1)
-	fmt.Printf("tree1: paths:%+v\r\n", paths)
+	fmt.Printf("tree paths:%+v\r\n", paths)
 	clearTree(node1)
 
 	//construct binaryTree
@@ -168,7 +168,7 @@ func main() {
 	node2 = &TreeNode{2, node5, node6}
 	node1 = &TreeNode{1, node2, node3}
 	paths = binaryTreePaths(node1)
-	fmt.Printf("tree1: paths:%+v\r\n", paths)
+	fmt.Printf("tree paths:%+v\r\n", paths)
 	clearTree(node1)
 
 	//construct binaryTree
@@ -185,7 +185,7 @@ func main() {
 	node2 = &TreeNode{2, node5, nil}
 	node1 = &TreeNode{1, node2, node3}
 	paths = binaryTreePaths(node1)
-	fmt.Printf("tree1: paths:%+v\r\n", paths)
+	fmt.Printf("tree paths:%+v\r\n", paths)
 	clearTree(node1)
 
 	//construct binaryTree
@@ -206,6 +206,6 @@ func main() {
 	node2 = &TreeNode{2, node5, node6}
 	node1 = &TreeNode{1, node2, node3}
 	paths = binaryTreePaths(node1)
-	fmt.Printf("tree1: paths:%+v\r\n", paths)
+	fmt.Printf("tree paths:%+v\r\n", paths)
 	clearTree(node1)
 }
