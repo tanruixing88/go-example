@@ -25,22 +25,15 @@ func binaryTreePaths(root *TreeNode) []string {
 	traceList := []*Trace{&Trace{curNode, false, false}}
 
 	for true {
-		if curNode.Left == nil && curNode.Right == nil {
-			pathStr := fmt.Sprintf("%d", traceList[0].Node.Val)
-			for i := 1; i < len(traceList); i++ {
-				pathStr += "->" + fmt.Sprintf("%d", traceList[i].Node.Val)
-			}
-			pathStrList = append(pathStrList, pathStr)
-
-			traceList = traceList[:len(traceList)-1]
-			if len(traceList) == 0 {
-				break
-			}
-			curNode = traceList[len(traceList)-1].Node
-			continue
-		}
-
 		if traceList[len(traceList)-1].TraceL && traceList[len(traceList)-1].TraceR {
+			if curNode.Left == nil && curNode.Right == nil {
+				pathStr := fmt.Sprintf("%d", traceList[0].Node.Val)
+				for i := 1; i < len(traceList); i++ {
+					pathStr += "->" + fmt.Sprintf("%d", traceList[i].Node.Val)
+				}
+				pathStrList = append(pathStrList, pathStr)
+			}
+
 			traceList = traceList[:len(traceList)-1]
 			if len(traceList) == 0 {
 				break
