@@ -77,7 +77,7 @@ func main() {
 	quickSort(a)
 	fmt.Printf("%+v\r\n", a)
 
-	a = []int{4,1,9,0,3,5,2,10,6,7}
+	a = []int{11,1,9,0,3,5,2,10,6,7}
 	quickSort(a)
 	fmt.Printf("%+v\r\n", a)
 }
