@@ -42,26 +42,23 @@ func binaryTreePaths(root *TreeNode) []string {
 			continue
 		}
 
-		if curNode.Left != nil {
-			if !traceList[len(traceList)-1].TraceL {
-				traceList[len(traceList)-1].TraceL = true
+		if !traceList[len(traceList)-1].TraceL {
+			traceList[len(traceList)-1].TraceL = true
+			if curNode.Left != nil {
 				curNode = curNode.Left
 				traceList = append(traceList, &Trace{curNode, false, false})
 				continue
 			}
-		} else {
-			traceList[len(traceList)-1].TraceL = true
 		}
 
-		if curNode.Right != nil {
-			if !traceList[len(traceList)-1].TraceR {
-				traceList[len(traceList)-1].TraceR = true
+		if !traceList[len(traceList)-1].TraceR {
+			traceList[len(traceList)-1].TraceR = true
+			if curNode.Right != nil {
 				curNode = curNode.Right
 				traceList = append(traceList, &Trace{curNode, false, false})
 				continue
 			}
-		} else {
-			traceList[len(traceList)-1].TraceR = true
+
 		}
 	}
 
