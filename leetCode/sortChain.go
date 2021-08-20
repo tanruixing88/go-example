@@ -10,6 +10,14 @@ type Node struct {
 func sortChain(node1 *Node, node2 *Node) *Node {
 	var nodeSort *Node
 
+	if node1 == nil && node2 == nil {
+		return nil
+	} else if node1 != nil && node2 == nil {
+		return node1
+	} else if node1 == nil && node2 != nil {
+		return node2
+	}
+
 	if node1.val < node2.val {
 		nodeSort = node1
 	} else {
