@@ -103,6 +103,32 @@ func maxPathSum(root *TreeNode) int {
 	return maxPathSum
 }
 
+func bfsTree(root *TreeNode) {
+	if root == nil {
+		return
+	}
+
+	curNodeList := []*TreeNode{root}
+	for true {
+		nxtNodeList := []*TreeNode{}
+		for _, curNode := range curNodeList {
+			fmt.Printf("curNode:%d  ", curNode.Val)
+			if curNode.Left != nil {
+				nxtNodeList = append(nxtNodeList, curNode.Left)
+			}
+			if curNode.Right != nil {
+				nxtNodeList = append(nxtNodeList, curNode.Right)
+			}
+		}
+
+		if len(nxtNodeList) == 0 {
+			break
+		} else {
+			curNodeList = nxtNodeList
+		}
+	}
+}
+
 
 func clearTree(root *TreeNode) {
 	if root == nil {
@@ -229,5 +255,6 @@ func main() {
 	node1 = &TreeNode{9, node2, node3}
 	max = maxPathSum(node1)
 	fmt.Printf("max path sum:%+v\r\n", max) // expect 3
+	bfsTree(node1)
 	clearTree(node1)
 }
