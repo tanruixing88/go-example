@@ -6,15 +6,15 @@ import (
 	"time"
 )
 
-func producer(productList []int, queue chan int, close chan int) {
+func producer(productList []int, queue chan int, close chan struct{}) {
 	for _,product := range productList {
 		queue <- product
 	}
 
-	close <- 1
+	close <- struct{}{}
 }
 
-func consumer(queue chan int, close chan int) {
+func consumer(queue chan int, close chan struct{}) {
 	for true {
 		product, _ := <- queue
 		fmt.Printf("%d ", product)
@@ -28,7 +28,7 @@ func consumer(queue chan int, close chan int) {
 		}
 	}
 	fmt.Printf("\r\n")
-	close <- 1
+	close <- struct{}{}
 }
 
 func multiProducer(i int, wg *sync.WaitGroup, productList []int, queue chan int) {
@@ -62,13 +62,26 @@ func main() {
 	var mutex sync.Mutex
 	productList := []int{1,2,3,4,5,6,7,8,9}
 	queue := make(chan int, 3)
-	producerClose := make(chan int, 1)
+	producerClose := make(chan struct{}, 1)
 	go producer(productList, queue, producerClose)
-	consumerClose := make(chan int, 1)
+	consumerClose := make(chan struct{}, 1)
 	go consumer(queue, consumerClose)
-	producerFlag, _ := <-producerClose
-	consumerFlag, _ := <-consumerClose
-	fmt.Printf("producer close flag:%d   consumer close flag:%d\r\n", producerFlag, consumerFlag)
+	p := false
+	c := false
+	for true {
+		select {
+		case <-producerClose:
+			fmt.Printf("producer close\r\n")
+			p = true
+		case <-consumerClose:
+			fmt.Printf("consumer close\r\n")
+			c = true
+		}
+
+		if p && c {
+			break
+		}
+	}
 
 	var producerWg sync.WaitGroup
 	queue = make(chan int, 3)
