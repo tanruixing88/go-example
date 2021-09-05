@@ -77,6 +77,37 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
     return r
 }
 
+// 142 环形链表 II
+//https://leetcode-cn.com/problems/linked-list-cycle-ii/
+
+func detectCycle(head *ListNode) *ListNode {
+    if head == nil {
+        return nil
+    }
+
+	s := head
+	f := head.Next
+
+	for s != f {
+	    if f == nil || f.Next == nil || f.Next.Next == nil {
+	        return nil
+        }
+
+        f = f.Next.Next
+        s = s.Next
+    }
+
+	pos := s.Next
+
+	s = head
+	for pos != s {
+	    pos = pos.Next
+	    s = s.Next
+    }
+
+	return pos
+}
+
 func main() {
 	fmt.Printf("case1:\r\n")
 	head := initListNode([]int{1,2,3,4,5})
