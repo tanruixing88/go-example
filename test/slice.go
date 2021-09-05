@@ -13,4 +13,19 @@ func main() {
 	s2 = append(s2, 1)
 	fmt.Printf("s1 type:%s s2 type:%s \r\n", reflect.TypeOf(s1), reflect.TypeOf(s2))
 
+	var s3 [10]int
+	s4 := s3[5:6]
+	fmt.Printf("s3 type:%s s4 type:%s \r\n", reflect.TypeOf(s3), reflect.TypeOf(s4))
+	fmt.Printf("s3 len:%d cap:%d\r\n", len(s3), cap(s3))
+	fmt.Printf("s4 len:%d cap:%d\r\n", len(s4), cap(s4))
+
+	orderLen := 5
+	order := make([]uint16, 2 * orderLen)
+	for i := 0; i < len(order); i++ {
+		order[i] = uint16(i + 1)
+	}
+	pollOrder := order[:orderLen:orderLen]
+	lockOrder := order[orderLen:][:orderLen:orderLen]
+	fmt.Printf("pollOrder len:%d cap:%d val:%+v\r\n", len(pollOrder), cap(pollOrder), pollOrder)
+	fmt.Printf("lockOrder len:%d cap:%d val:%+v\r\n", len(lockOrder), cap(lockOrder), lockOrder)
 }
