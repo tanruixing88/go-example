@@ -28,4 +28,7 @@ func main() {
 	lockOrder := order[orderLen:][:orderLen:orderLen]
 	fmt.Printf("pollOrder len:%d cap:%d val:%+v\r\n", len(pollOrder), cap(pollOrder), pollOrder)
 	fmt.Printf("lockOrder len:%d cap:%d val:%+v\r\n", len(lockOrder), cap(lockOrder), lockOrder)
+
+	s5 := []int{1,2,3}
+	fmt.Printf("s5 slice 0 :%+v  s5 3:%+v\r\n", s5[:0], s5[:3])
 }

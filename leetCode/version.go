@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+//https://leetcode-cn.com/problems/compare-version-numbers/
+
 func versionCmp(v1 string, v2 string) int {
 	v1L := make([]int, 0)
 	vNum := 0
@@ -37,6 +39,26 @@ func versionCmp(v1 string, v2 string) int {
 		j++
 	}
 
+	i := len(v1L) - 1
+	for i >= 0 {
+		if v1L[i] == 0 {
+			i--
+		} else {
+			break
+		}
+	}
+	v1L = v1L[:i+1]
+
+	i = len(v2L) - 1
+	for i >= 0 {
+		if v2L[i] == 0 {
+			i--
+		} else {
+			break
+		}
+	}
+	v2L = v2L[:i+1]
+
 	if len(v1L)	> len(v2L) {
 		return 1
 	} else if len(v1L) < len(v2L) {
@@ -50,7 +72,7 @@ func main() {
 	v1 := "1.02.11"
 	v2 := "2.14.4"
 	fmt.Printf("ret:%d\r\n", versionCmp(v1, v2))
-	v1 = "1.02.11"
-	v2 = "2.14.4"
+	v1 = "1.0"
+	v2 = "1.0.0"
 	fmt.Printf("ret:%d\r\n", versionCmp(v1, v2))
 }
