@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
-	"time"
+	"runtime"
+	"strconv"
 )
 
 /**
@@ -23,15 +25,31 @@ import (
  */
 
 
+/**
+ * 打印goroutine栈信息
+ *
+ */
+func getGoRoutineId() int64 {
+	b := make([]byte, 64)
+	l := runtime.Stack(b, true)
+	fmt.Printf("go routine stack:%s", string(b))
+	b = b[:l]
+	b = bytes.TrimPrefix(b, []byte("goroutine "))
+	b = b[:bytes.IndexByte(b, ' ')]
+	n, _ := strconv.ParseInt(string(b), 10, 64)
+	return n
+}
 
 
 func main() {
+	getGoRoutineId()
+	/*
 	//main 函数结束都结束，非main函数，子协程都会存在
 	fmt.Printf("main start\r\n")
 	go func() {
 		fmt.Printf("start \r\n")
 		go func() {
-			for i := 0; i < 10; i++ {
+			for i := 0; i < 3; i++ {
 				fmt.Printf("sub routine:%d\r\n", i)
 				time.Sleep(time.Second)
 			}
@@ -39,7 +57,8 @@ func main() {
 		fmt.Printf("end \r\n")
 	}()
 	fmt.Printf("main end\r\n")
-	for true {
+	for i := 0; i < 5; i++ {
 		time.Sleep(time.Second)
 	}
+	*/
 }
