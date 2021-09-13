@@ -100,8 +100,68 @@ func heapSort(a []int) {
 	fmt.Printf("heapSort:%+v\r\n", a)
 }
 
+func quickSort(a []int) {
+	n := len(a)
+	if n <= 1 {
+		return
+	}
+
+	if n == 2 {
+		if a[1] > a[0] {
+			a[0], a[1] = a[1], a[0]
+		}
+		return
+	}
+
+	p := a[0]
+	l := 1
+	h := n-1
+
+	for l < h {
+		if a[l] <= p {
+			l++
+			continue
+		}
+
+		if a[h] >= p {
+			h--
+			continue
+		}
+
+		a[l], a[h] = a[h], a[l]
+	}
+
+	if a[l] > p {
+		l--
+	} else if a[h] < p {
+		h++
+	} else {
+		l--
+	}
+
+	if l > 1 {
+		quickSort(a[1:h])
+	}
+
+	if h < n - 1 {
+		quickSort(a[h:])
+	}
+
+	if a[1] < p {
+		for i := 1; i <= l; i++ {
+			a[i-1] = a[i]
+		}
+		a[l] = p
+	}
+
+	fmt.Printf("a:%+v\r\n", a)
+}
+
 func main() {
 	bubbleSort([]int{4,5,3})
 	bucketSort([]int{3,5,2,4,1}, 3)
 	heapSort([]int{3,5,2,4,1})
+	quickSort([]int{3,5,2,4,1})
+	quickSort([]int{3,5})
+	quickSort([]int{11,1,9,0,3,5,2,10,6,7})
 }
