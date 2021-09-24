@@ -30,6 +30,16 @@ func printListNode(head *ListNode) {
     fmt.Printf("\r\n")
 }
 
+func getListNodeCnt(head *ListNode) int {
+    curNode := head
+    cnt := 0
+    for curNode != nil {
+        curNode = curNode.Next
+        cnt++
+    }
+    return cnt
+}
+
 //25. K 个一组翻转链表
 //https://leetcode-cn.com/problems/reverse-nodes-in-k-group/
 func reverseKGroup(head *ListNode, k int) *ListNode {
@@ -108,6 +118,97 @@ func detectCycle(head *ListNode) *ListNode {
 	return pos
 }
 
+//链表排序 tNo:148
+//https://leetcode-cn.com/problems/sort-list/
+
+func sortList(head *ListNode) *ListNode {
+    if head == nil || head.Next == nil {
+        return head
+    }
+
+    if head.Next.Next == nil {
+        if head.Val > head.Next.Val {
+            head.Val, head.Next.Val = head.Next.Val, head.Val
+        }
+        return head
+    }
+
+    p1 := head
+    p2 := head.Next
+    for p2 != nil && p2.Next != nil {
+        p1 = p1.Next
+        p2 = p2.Next.Next
+    }
+
+    p2h := p1.Next
+    p1.Next = nil
+
+    l1 := sortList(head)
+    l2 := sortList(p2h)
+    /*
+    fmt.Printf("l1:")
+    printListNode(l1)
+    fmt.Printf("l2:")
+    printListNode(l2)
+    c1 := getListNodeCnt(l1)
+    c2 := getListNodeCnt(l2)
+     */
+    if l1 == nil && l2 == nil {
+        return nil
+    } else if l1 == nil && l2 != nil {
+        return l2
+    } else if l1 != nil && l2 == nil {
+        return l1
+    }
+
+    var r *ListNode
+    if l1.Val < l2.Val {
+        r = l1
+    } else {
+        r = l2
+    }
+
+    for l1 != nil && l2 != nil {
+    	if l1.Val < l2.Val {
+            for l1.Next != nil && l1.Next.Val <= l2.Val {
+                l1 = l1.Next
+            }
+
+            if l1.Next == nil {
+                l1.Next = l2
+                break
+            } else {
+            	t := l1.Next
+                l1.Next = l2
+                l1 = t
+            }
+        } else  {
+            for l2.Next != nil && l2.Next.Val <= l1.Val {
+                l2 = l2.Next
+            }
+
+            if l2.Next == nil {
+                l2.Next = l1
+                break
+            } else {
+                t := l2.Next
+                l2.Next = l1
+                l2 = t
+            }
+        }
+    }
+
+    /*
+    c3 := getListNodeCnt(r)
+    if c1 + c2 != c3 {
+        fmt.Printf("***********************\r\n")
+        fmt.Printf("rrrr:")
+        printListNode(r)
+    }
+     */
+    return r
+}
+
 func main() {
 	fmt.Printf("case1:\r\n")
 	head := initListNode([]int{1,2,3,4,5})
@@ -118,5 +219,22 @@ func main() {
     head = initListNode([]int{1,2,3,4,5,6,7,8,9,10})
     printListNode(head)
     r = reverseKGroup(head, 3)
+    printListNode(r)
+    fmt.Printf("sortList:\r\n")
+    head = initListNode([]int{4,2,1,3})
+    printListNode(head)
+    r = sortList(head)
+    printListNode(r)
+    head = initListNode([]int{-1,5,3,4,0})
+    printListNode(head)
+    r = sortList(head)
+    printListNode(r)
+    head = initListNode([]int{4,19,14,5,-3,1,8,5,11,15})
+    printListNode(head)
+    r = sortList(head)
+    printListNode(r)
+    head = initListNode([]int{-84,142,41,-17,-71,170,186,183,-21,-76,76,10,29,81,112,-39,-6,-43,58,41,111,33,69,97,-38,82,-44,-7,99,135,42,150,149,-21,-30,164,153,92,180,-61,99,-81,147,109,34,98,14,178,105,5,43,46,40,-37,23,16,123,-53,34,192,-73,94,39,96,115,88,-31,-96,106,131,64,189,-91,-34,-56,-22,105,104,22,-31,-43,90,96,65,-85,184,85,90,118,152,-31,161,22,104,-85,160,120,-31,144,115})
+    printListNode(head)
+    r = sortList(head)
     printListNode(r)
 }
