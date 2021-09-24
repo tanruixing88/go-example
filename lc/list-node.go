@@ -170,6 +170,7 @@ func sortList(head *ListNode) *ListNode {
 
     for l1 != nil && l2 != nil {
     	if l1.Val < l2.Val {
+    	    //一定要循环完毕，不然l1和l2两个列表里的值相同不好处理
             for l1.Next != nil && l1.Next.Val <= l2.Val {
                 l1 = l1.Next
             }
@@ -207,6 +208,31 @@ func sortList(head *ListNode) *ListNode {
     }
      */
     return r
+}
+//合并数组 tID-21
+//https://leetcode-cn.com/problems/merge-two-sorted-lists/submissions/
+func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
+    hNode := &ListNode{0, nil}
+    tNode := hNode
+    for l1 != nil && l2 != nil {
+        if l1.Val < l2.Val {
+            tNode.Next = l1
+            l1 = l1.Next
+        } else {
+            tNode.Next = l2
+            l2 = l2.Next
+        }
+        tNode = tNode.Next
+    }
+
+    if l1 == nil {
+        tNode.Next = l2
+    }
+    if l2 == nil {
+        tNode.Next = l1
+    }
+
+    return hNode.Next
 }
 
 func main() {

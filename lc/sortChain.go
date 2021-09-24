@@ -24,25 +24,23 @@ func sortChain(node1 *Node, node2 *Node) *Node {
 		nodeSort = node2
 	}
 
+	tNode := &Node{nil, 0}
 	for node1 != nil && node2 != nil {
-		node1Next := node1.next
-		node2Next := node2.next
-
 		if node1.val < node2.val {
-			if node1Next.val < node2.val {
-				node1 = node1Next
-			} else {
-				node1.next = node2
-				node1 = node1Next
-			}
+			tNode.next = node1
+			node1 = node1.next
 		} else {
-			if node2Next.val < node1.val {
-				node2 = node2Next
-			} else {
-				node2.next = node1
-				node2 = node2Next
-			}
+			tNode.next = node2
+			node2 = node2.next
 		}
+		tNode = tNode.next
+	}
+
+	if node1 == nil {
+		tNode.next = node2
+	}
+	if node2 == nil {
+		tNode.next = node1
 	}
 
 	return nodeSort
