@@ -38,4 +38,17 @@ func main() {
 
     fmt.Printf("chan1 len:%d\r\n", len(chan1))
     randChan()
+    chan2 := make(chan int)
+    if chan2 == nil {
+        fmt.Printf("no buffer chan is nil")
+    } else {
+        fmt.Printf("no buffer chan is not nil")
+    }
+    //直接进入休眠状态
+
+    //chan3 := make(chan int, 10)
+    //chan3 = nil
+    //chan3 <- 1 //直接休眠
+    //fmt.Printf("int value:%d\r\n", <-chan3) //直接休眠
+    //fmt.Printf("can no reach\r\n")
 }

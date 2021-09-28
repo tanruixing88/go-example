@@ -31,4 +31,6 @@ func main() {
 
 	s5 := []int{1,2,3}
 	fmt.Printf("s5 slice 0 :%+v  s5 3:%+v\r\n", s5[:0], s5[:3])
+	s5 = append(s5, 4)
+	fmt.Printf("array can user append")
 }
