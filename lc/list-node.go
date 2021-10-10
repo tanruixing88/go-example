@@ -235,7 +235,7 @@ func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
     return hNode.Next
 }
 
-//tID-234   此题是不改变head链表的解法
+//tID-234   此题是不改变head链表的解法, 已经ac过
 // https://leetcode-cn.com/problems/aMhZSa/submissions/
 func isPalindrome(head *ListNode) bool {
     if head == nil {
