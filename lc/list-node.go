@@ -235,6 +235,47 @@ func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
     return hNode.Next
 }
 
+//tID-234   此题是不改变head链表的解法
+// https://leetcode-cn.com/problems/aMhZSa/submissions/
+func isPalindrome(head *ListNode) bool {
+    if head == nil {
+        return false
+    }
+
+    slow := head
+    fast := slow
+    nodeValList := make([]int, 0)
+    for fast.Next != nil && fast.Next.Next != nil {
+        nodeValList = append(nodeValList, slow.Val)
+        slow = slow.Next
+        fast = fast.Next.Next
+    }
+
+    next := slow.Next
+
+    //奇数
+    if fast.Next == nil {
+        //next = next.Next //首节点已经算进去了
+    } else if fast.Next.Next == nil { //偶数
+        nodeValList = append(nodeValList, slow.Val)
+    }
+
+    for len(nodeValList) > 0 && next != nil {
+        if next.Val != nodeValList[len(nodeValList)-1] {
+            return false
+        }
+
+        next = next.Next
+        nodeValList = nodeValList[:len(nodeValList)-1]
+    }
+
+    if next == nil && len(nodeValList) == 0 {
+        return true
+    }
+
+    return false
+}
+
 func main() {
 	fmt.Printf("case1:\r\n")
 	head := initListNode([]int{1,2,3,4,5})
