@@ -310,6 +310,28 @@ func preVisitDfs(root *TreeNode) {
 	fmt.Printf("\r\n")
 }
 
+//标准方案
+// 通过栈方式进行处理好处是代码简单，缺点是代码不对称，对于后序遍历还需要退回前面的方案
+func preVisitStack(root *TreeNode) {
+	stack := make([]*TreeNode, 0)
+	p := root
+
+	for p != nil && len(stack) > 0 {
+		for p != nil {
+			fmt.Printf(" %d ", p.Val)
+			stack = append(stack, p)
+			p = p.Left
+		}
+
+		for len(stack) > 0 {
+			p = stack[0]
+			stack = stack[:len(stack)-1]
+			p = p.Right
+		}
+	}
+}
+
+
 
 func main() {
 	var node1,node2,node3,node4,node5,node6,node7 *TreeNode
@@ -375,6 +397,7 @@ func main() {
 	fmt.Printf("\r\n")
 	preVisitNoRecursion(node1)
 	preVisitDfs(node1)
+	preVisitStack(node1)
 	fmt.Printf("preVisit end!\r\n")
 	clearTree(node1)
 
