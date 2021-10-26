@@ -49,7 +49,7 @@ func kmp(s string, p string) int {
 	*/
 
 	//直接用子字符串切割，子字符串比较
-	for j := 2; j < n; j++ {
+	for j := n-1; j >= 2; j-- {
 		for k := j / 2; k >= 0; k-- {
 			if p[0:k] == p[j-k:j] {
 				next[j]	= k
