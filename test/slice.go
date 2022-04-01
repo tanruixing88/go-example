@@ -32,5 +32,9 @@ func main() {
 	s5 := []int{1,2,3}
 	fmt.Printf("s5 slice 0 :%+v  s5 3:%+v\r\n", s5[:0], s5[:3])
 	s5 = append(s5, 4)
-	fmt.Printf("array can user append")
+	fmt.Printf("array can user append\r\n")
+
+	s6 := []int{1,2,3,4}
+	s7 := append(s6[:1], s6[2:]...)
+	fmt.Printf("delete elem 2. s6:%+v s7:%+v\r\n", s6, s7)
 }
