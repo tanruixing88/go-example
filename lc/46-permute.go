@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func permute(nums []int) [][]int {
+func permute1(nums []int) [][]int {
 	retPermute := make([][]int, 0)
 
 	if len(nums) <= 0 {
@@ -16,7 +16,7 @@ func permute(nums []int) [][]int {
 	}
 
 	if len(leftNums) > 0 {
-		leftRetPermute := permute(leftNums)
+		leftRetPermute := permute1(leftNums)
 		for j := 0; j < len(leftRetPermute); j++ {
 			for k := 0; k < len(leftRetPermute[j]) + 1; k++ {
 				tmpList := make([]int, 0)
@@ -46,6 +46,37 @@ func permute(nums []int) [][]int {
 	}
 
 	return retPermute
+}
+
+func permute( nums []int ) [][]int {
+	res := make([][]int, 0)
+	tmp := make([]int, 0)
+	var recursion func(leftNums, tmpRes []int)
+
+	recursion = func(leftNums, tmpRes []int) {
+		if len(leftNums) == 0 {
+			res = append(res, tmpRes)
+			return
+		}
+		for index, value := range leftNums {
+			newTmpRes := append(tmpRes, value)
+			newLeftNums := make([]int, len(leftNums)-1)
+			count := 0
+			for i, v := range leftNums {
+				if i != index {
+					newLeftNums[count] = v
+					count++
+				}
+			}
+			// newLeftNums := append(leftNums[:index], leftNums[index+1:]...)
+			// 不使用上面这行代码的原因是append会改变leftNums底层数组的值
+			recursion(newLeftNums, newTmpRes)
+		}
+	}
+
+	recursion(nums, tmp)
+	return res
+
 }
 
 func main() {

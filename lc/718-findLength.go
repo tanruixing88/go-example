@@ -44,9 +44,63 @@ func findLength(nums1 []int, nums2 []int) int {
 	}
 }
 
-func main() {
-	r := findLength([]int{0,0,0,0,1}, []int{1,0,0,0,0})
-	fmt.Printf("r:%d\r\n", r)
+func findLength1(nums1 []int, nums2 []int) int {
+	maxL := 0
+	for w := 1; w < len(nums1) + len(nums2); w++ {
+		j := len(nums2)-w // len(nums2) - 1 - (w -1)
+		if j < 0 {
+			j = 0
+		}
 
+		i := w - len(nums2) // w - 1 - (len(nums2) - 1)
+		if i < 0 {
+			i = 0
+		}
+
+		t := 0
+		tL := 0
+		for i+t < len(nums1) && j+t < len(nums2) {
+			if nums1[i+t] != nums2[j+t] {
+				t++
+				tL = 0
+				continue
+			}
+
+			tL++
+			if tL > maxL {
+				maxL = tL
+			}
+			t++
+		}
+		fmt.Printf("w:%d i:%d j:%d tL:%d maxL:%d \r\n", w, i, j, tL, maxL)
+	}
+
+	return maxL
+}
+
+func main() {
+	nums1 := []int{0,0,0,0,1}
+	nums2 := []int{1,0,0,0,0}
+	fmt.Printf("nums1:%+v nums2:%+v r:%d\r\n", nums1, nums2, findLength1(nums1, nums2))
+
+	nums1 = []int{1,0,0,0,0}
+	nums2 = []int{0,0,0,0,1}
+	fmt.Printf("nums1:%+v nums2:%+v r:%d\r\n", nums1, nums2, findLength1(nums1, nums2))
+
+	nums1 = []int{1,2,3}
+	nums2 = []int{0,4,2,3,1}
+	fmt.Printf("nums1:%+v nums2:%+v r:%d\r\n", nums1, nums2, findLength1(nums1, nums2))
+
+	nums1 = []int{0,4,2,3,1}
+	nums2 = []int{1,2,3}
+	fmt.Printf("nums1:%+v nums2:%+v r:%d\r\n", nums1, nums2, findLength1(nums1, nums2))
+
+	nums1 = []int{1,2,3,2,1}
+	nums2 = []int{3,2,1,4,7}
+	fmt.Printf("nums1:%+v nums2:%+v r:%d\r\n", nums1, nums2, findLength1(nums1, nums2))
+
+	nums1 = []int{0,0,0,0,0}
+	nums2 = []int{0,0,0,0,0}
+	fmt.Printf("nums1:%+v nums2:%+v r:%d\r\n", nums1, nums2, findLength1(nums1, nums2))
 }
 
