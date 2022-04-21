@@ -5,6 +5,8 @@ import (
 	"reflect"
 )
 
+//slice 扩展是按照2倍扩展到1024,后续按照1.25倍进行扩展。
+
 func main() {
 	var s1 [1]int
 	s1[0] = 1
@@ -37,4 +39,19 @@ func main() {
 	s6 := []int{1,2,3,4}
 	s7 := append(s6[:1], s6[2:]...)
 	fmt.Printf("delete elem 2. s6:%+v s7:%+v\r\n", s6, s7)
+
+	//声明空和new的[]int均为nil
+	var s8 []int
+	s8IsNil := false
+	if s8 == nil {
+		s8IsNil = true
+	}
+	s9 := *new([]int)
+	s9IsNil := false
+	if s9 == nil {
+		s9IsNil = true
+	}
+
+	fmt.Printf("s8:%t s9:%t\r\n", s8IsNil, s9IsNil)
+
 }
