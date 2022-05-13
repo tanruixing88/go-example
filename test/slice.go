@@ -54,4 +54,12 @@ func main() {
 
 	fmt.Printf("s8:%t s9:%t\r\n", s8IsNil, s9IsNil)
 
+	s10 := []int{1,2,3}
+	appendModifyFunc := func(s []int) {
+		s = append(s, 4) //  单纯append并不会改变切片里的值
+		s[2] = 5 //单独修改还是结果被修改，但是前面加了append后就不一样了
+	}
+	appendModifyFunc(s10)
+	fmt.Printf("s10:%+v\r\n", s10)
+
 }
