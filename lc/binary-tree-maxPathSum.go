@@ -316,15 +316,15 @@ func preVisitStack(root *TreeNode) {
 	stack := make([]*TreeNode, 0)
 	p := root
 
-	for p != nil && len(stack) > 0 {
+	for p != nil || len(stack) > 0 {
 		for p != nil {
-			fmt.Printf(" %d ", p.Val)
+			fmt.Printf("%d ", p.Val)
 			stack = append(stack, p)
 			p = p.Left
 		}
 
-		for len(stack) > 0 {
-			p = stack[0]
+		if len(stack) > 0 {
+			p = stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
 			p = p.Right
 		}
@@ -395,9 +395,13 @@ func main() {
 	fmt.Printf("preVisit:\r\n")
 	preVisit(node1)
 	fmt.Printf("\r\n")
+	fmt.Printf("chain: \r\n")
 	preVisitNoRecursion(node1)
+	fmt.Printf("dfs: \r\n")
 	preVisitDfs(node1)
+	fmt.Printf("stack: \r\n")
 	preVisitStack(node1)
+	fmt.Printf("\r\n")
 	fmt.Printf("preVisit end!\r\n")
 	clearTree(node1)
 
