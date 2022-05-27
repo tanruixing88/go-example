@@ -62,4 +62,8 @@ func main() {
 	appendModifyFunc(s10)
 	fmt.Printf("s10:%+v\r\n", s10)
 
+	s11 := []int{1,2,3}
+	fmt.Printf("s11:%+v\r\n", s11[len(s11):])
+	fmt.Printf("s11:%+v\r\n", s11[3:]) // 若打印s11[4:]则会引发panic
+
 }
