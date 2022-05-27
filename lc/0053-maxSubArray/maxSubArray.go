@@ -4,7 +4,8 @@ import (
 	"fmt"
 )
 
-func maxSubArray(nums []int) int {
+//从时间复杂度和空间复杂度来看，这种方式是更好的，毕竟和官方给出的题解来看，不需要修改nums数组结构
+func maxSubArray1(nums []int) int {
 	if len(nums) < 1 {
 		return 0
 	}
@@ -36,6 +37,25 @@ func maxSubArray(nums []int) int {
 			if sum > maxSum {
 				maxSum = sum
 			}
+		}
+	}
+
+	return maxSum
+}
+
+func maxSubArray(nums []int) int {
+	sum := nums[0]
+	maxSum := sum
+	for i := 1; i < len(nums); i++ {
+		//其实之前的sum只要一直大于0就可以复用，本质只需要判断sum即可
+		if sum >= 0 {
+			sum += nums[i]
+		} else {
+			sum = nums[i]
+		}
+
+		if sum > maxSum {
+			maxSum = sum
 		}
 	}
 
