@@ -24,7 +24,7 @@ func isMatch(s string, p string) bool {
 		for j := 1; j <= n; j++ {
 			if p[j-1] == '*' {
 				//判断 s 并不匹配 c*s
-				f[i][j] = f[i][j] || f[i][j-2]
+				f[i][j] = f[i][j-2]
 
 				//判断正则匹配了 s s*
 				if match(i,j-1) {
@@ -32,7 +32,7 @@ func isMatch(s string, p string) bool {
 				}
 			} else {
 				if match(i, j) {
-					f[i][j] = f[i][j] || f[i-1][j-1]
+					f[i][j] = f[i-1][j-1]
 				}
 			}
 		}
