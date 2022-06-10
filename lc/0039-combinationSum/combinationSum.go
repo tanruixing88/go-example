@@ -125,7 +125,7 @@ func combinationSum1(candidates []int, target int) [][]int {
 
 //见官方题解，https://leetcode.cn/problems/combination-sum/solution/zu-he-zong-he-by-leetcode-solution/
 //不需要额外的遍历，仅仅需要一个全局的comb栈队列，走一遍遍历即可
-func combinationSum(candidates []int, target int) [][]int {
+func combinationSum2(candidates []int, target int) [][]int {
 	comb := []int{}
 	ans := make([][]int, 0)
 	var dfs func(target, idx int)
@@ -148,6 +148,34 @@ func combinationSum(candidates []int, target int) [][]int {
 	}
 	dfs(target, 0)
 	return ans
+}
+
+func combinationSum(candidates []int, target int) [][]int {
+	combinations := make([][]int, 0)
+	combination := make([]int, 0)
+
+	var dfs func(curTarget int, idx int)
+	dfs = func(curTarget int, idx int) {
+		if len(candidates) == idx {
+			return
+		}
+
+		if curTarget == 0 {
+			combinations = append(combinations, append([]int{}, combination...))
+			return
+		}
+
+		dfs(curTarget, idx+1)
+
+		if candidates[idx] <= curTarget {
+			combination = append(combination, candidates[idx])
+			dfs(curTarget-candidates[idx], idx)
+			combination = combination[:len(combination)-1]
+		}
+	}
+	dfs(target, 0)
+
+	return combinations
 }
 
 
