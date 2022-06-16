@@ -150,6 +150,7 @@ func combinationSum2(candidates []int, target int) [][]int {
 	return ans
 }
 
+//此种解法和0051题有一定的共通之处, dfs 用法有类似之处
 func combinationSum(candidates []int, target int) [][]int {
 	combinations := make([][]int, 0)
 	combination := make([]int, 0)
