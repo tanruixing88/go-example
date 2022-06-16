@@ -4,7 +4,6 @@ import (
 	"fmt"
 )
 
-//从时间复杂度和空间复杂度来看，这种方式是更好的，毕竟和官方给出的题解来看，不需要修改nums数组结构
 func maxSubArray1(nums []int) int {
 	if len(nums) < 1 {
 		return 0
