@@ -40,8 +40,20 @@ func deleteMapKeyCaller() {
 	printMemStats("deleteMapKeyCaller1")
 }
 
+func lenValue() {
+	m := [...]int{
+		'a': 1,
+		'b': 2,
+		'c': 3,
+	}
+
+	m['a'] = 3
+	fmt.Printf("len value:%d\r\n", len(m))
+}
+
 
 func main() {
 	//golang map 删除key并不会释放内存
 	deleteMapKeyCaller()
+	lenValue()
 }
