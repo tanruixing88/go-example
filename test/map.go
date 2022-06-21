@@ -41,14 +41,16 @@ func deleteMapKeyCaller() {
 }
 
 func lenValue() {
+	//本质是0-9的key声明map，下面的0也包含在内
+	//'a' 字节也可以算作非负整数，对应ascii码值为97
 	m := [...]int{
-		'a': 1,
-		'b': 2,
-		'c': 3,
+		8: 1,
+		9: 2,
 	}
+	fmt.Printf("before modify len value:%d\r\n", len(m))
 
-	m['a'] = 3
-	fmt.Printf("len value:%d\r\n", len(m))
+	m[0] = 3
+	fmt.Printf("after modify len value:%d\r\n", len(m))
 }
 
 
