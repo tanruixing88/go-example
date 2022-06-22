@@ -13,6 +13,7 @@ func main() {
 	//s1 长度是一的数组，不是slice类型, 不能用append
 	var s2 []int
 	s2 = append(s2, 1)
+	//s1 = append(s2, 2) //ide 会提示报错
 	fmt.Printf("s1 type:%s s2 type:%s \r\n", reflect.TypeOf(s1), reflect.TypeOf(s2))
 
 	var s3 [10]int
@@ -26,15 +27,17 @@ func main() {
 	for i := 0; i < len(order); i++ {
 		order[i] = uint16(i + 1)
 	}
-	pollOrder := order[:orderLen:orderLen]
+	pollOrder := order[:orderLen:(orderLen+4)] // 这里的双冒号是指新的切片cap, 新的cap受制于原有slice cap长度限制
 	lockOrder := order[orderLen:][:orderLen:orderLen]
 	fmt.Printf("pollOrder len:%d cap:%d val:%+v\r\n", len(pollOrder), cap(pollOrder), pollOrder)
 	fmt.Printf("lockOrder len:%d cap:%d val:%+v\r\n", len(lockOrder), cap(lockOrder), lockOrder)
 
-	s5 := []int{1,2,3}
-	fmt.Printf("s5 slice 0 :%+v  s5 3:%+v\r\n", s5[:0], s5[:3])
-	s5 = append(s5, 4)
-	fmt.Printf("array can user append\r\n")
+	var s5 [3]int
+	s5[0] = 1
+	s5[1] = 2
+	s5[2] = 3
+	fmt.Printf("s5 slice 0 :%+v  s5 3:%+v len(s5):%d cap(s5):%d  s5 type:%s\r\n", s5[:0], s5[:3], len(s5), cap(s5), reflect.TypeOf(s5))
+	//s5 = append(s5, 4)
 
 	s6 := []int{1,2,3,4}
 	s7 := append(s6[:1], s6[2:]...)
