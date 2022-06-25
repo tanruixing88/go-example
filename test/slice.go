@@ -56,10 +56,35 @@ func testNilAndEmptySlice() {
 		*(*reflect.SliceHeader)(unsafe.Pointer(&s4)), *(*reflect.SliceHeader)(unsafe.Pointer(&s5)))
 }
 
+//range 是否能够导致死循环
+//答案是不能的，range本质就是先确定了最初s的长度，
+// The loop we generate:
+//   for_temp := range
+//   len_temp := len(for_temp)
+//   for index_temp = 0; index_temp < len_temp; index_temp++ {
+//           value_temp = for_temp[index_temp]
+//           index = index_temp
+//           value = value_temp
+//           original body
+//
+func testForRangeLoop() {
+	fmt.Printf("testForRangeLoop:")
+	s := []int{1,2,3,4,5}
+	for _, v := range s {
+		s = append(s, v)
+		//输出6 7 8 9 10
+		fmt.Printf("len(s)=%d ", len(s))
+	}
+	fmt.Printf("\r\n")
+}
+
+
+
 
 func main() {
 	testDeleteElemByIndex()
 	testNilAndEmptySlice()
+	testForRangeLoop()
 	var s1 [1]int
 	s1[0] = 1
 	//s1 长度是一的数组，不是slice类型, 不能用append
