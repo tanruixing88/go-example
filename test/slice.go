@@ -3,27 +3,63 @@ package main
 import (
 	"fmt"
 	"reflect"
+	"unsafe"
 )
 
 //slice 扩展是按照2倍扩展到1024,后续按照1.25倍进行扩展。
 
-func deleteElemByIndex(s []int, index int) {
+//通用删除某个元素的处理
+func deleteElemByIndex(s []int, index int) []int {
 	if index < 0 || index >= len(s) {
-		return
+		return []int{}
 	}
 
-	s = append(s[:index], s[index+1:]...)
+	return append(s[0:index], s[index+1:]...)
 }
 
 func testDeleteElemByIndex() {
 	s := []int{1,2,3,4}
 	fmt.Printf("s:%+v", s)
 	index := 0
-	deleteElemByIndex(s, index)
-	fmt.Printf("deleteElemByIndex index:%d s:%+v\r\n", index, s)
+	d := deleteElemByIndex(s, index)
+	fmt.Printf("deleteElemByIndex index:%d s:%+v\r\n", index, d)
+
+	s = []int{1,2,3,4}
+	fmt.Printf("s:%+v", s)
+	index = 2
+	d = deleteElemByIndex(s, index)
+	fmt.Printf("deleteElemByIndex index:%d s:%+v\r\n", index, d)
+
+	s = []int{1,2,3,4}
+	fmt.Printf("s:%+v", s)
+	index = 3
+	d = deleteElemByIndex(s, index)
+	fmt.Printf("deleteElemByIndex index:%d s:%+v\r\n", index, d)
 }
 
+
+//空指针和空切片判断
+func testNilAndEmptySlice() {
+	var s1 []int
+	s2 := make([]int, 0)
+	s3 := make([]int, 0)
+
+	//s1的data为0,但s2和s3的data值均为824634137496, nil的切片没有单独存储，但是所有空切片指向了同样的地址
+	fmt.Printf("testNilAndEmptySlice s1 pointer:%+v, s2 pointer:%+v, s3 pointer:%+v\r\n",
+	*(*reflect.SliceHeader)(unsafe.Pointer(&s1)), *(*reflect.SliceHeader)(unsafe.Pointer(&s2)),
+	*(*reflect.SliceHeader)(unsafe.Pointer(&s3)))
+
+	//申请的长度不为0,则内存地址是不一样的
+	s4 := make([]int, 1)
+	s5 := make([]int, 1)
+	fmt.Printf("testNilAndEmptySlice s4 pointer:%+v, s5 pointer:%+v\r\n",
+		*(*reflect.SliceHeader)(unsafe.Pointer(&s4)), *(*reflect.SliceHeader)(unsafe.Pointer(&s5)))
+}
+
+
 func main() {
+	testDeleteElemByIndex()
+	testNilAndEmptySlice()
 	var s1 [1]int
 	s1[0] = 1
 	//s1 长度是一的数组，不是slice类型, 不能用append
