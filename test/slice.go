@@ -7,6 +7,22 @@ import (
 
 //slice 扩展是按照2倍扩展到1024,后续按照1.25倍进行扩展。
 
+func deleteElemByIndex(s []int, index int) {
+	if index < 0 || index >= len(s) {
+		return
+	}
+
+	s = append(s[:index], s[index+1:]...)
+}
+
+func testDeleteElemByIndex() {
+	s := []int{1,2,3,4}
+	fmt.Printf("s:%+v", s)
+	index := 0
+	deleteElemByIndex(s, index)
+	fmt.Printf("deleteElemByIndex index:%d s:%+v\r\n", index, s)
+}
+
 func main() {
 	var s1 [1]int
 	s1[0] = 1
@@ -37,7 +53,7 @@ func main() {
 	s5[1] = 2
 	s5[2] = 3
 	fmt.Printf("s5 slice 0 :%+v  s5 3:%+v len(s5):%d cap(s5):%d  s5 type:%s\r\n", s5[:0], s5[:3], len(s5), cap(s5), reflect.TypeOf(s5))
-	//s5 = append(s5, 4)
+	//s5 = append(s5, 4) //数组无法append
 
 	s6 := []int{1,2,3,4}
 	s7 := append(s6[:1], s6[2:]...)
