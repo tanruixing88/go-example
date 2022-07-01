@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"runtime"
 	"strconv"
+	"sync"
 )
 
 /**
@@ -56,8 +57,37 @@ func getGoRoutineId() int64 {
 }
 
 
+//进程间交互问题
+func goroutineInteract() {
+	a := []int{1,1,1}
+	b := []int{2,2,2}
+	c := []int{3,3,3}
+	fmt.Println(calculate(a, b, c))
+}
+
+func calculate(in ...[]int) []int {
+	result := make([]int, len(in))
+	var wg sync.WaitGroup // wg 全部等待考察点
+	for i := range in {
+		wg.Add(1)
+		go func(i int) { //入参考虑加入 i, s := range in, 将s可以作为入参传递到goroutine里
+			sum := 0
+			for j := range in[i] {
+				sum += in[i][j]
+			}
+
+			result[i] = sum //按照次序进行赋值，这个之前是append处理的方案
+			wg.Done()
+		}(i)
+	}
+	wg.Wait()
+	return result
+}
+
+
 func main() {
 	getGoRoutineId()
+	goroutineInteract()
 	/*
 	//main 函数结束都结束，非main函数，子协程都会存在
 	fmt.Printf("main start\r\n")

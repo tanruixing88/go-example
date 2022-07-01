@@ -121,18 +121,61 @@ func testChanClosed() {
     fmt.Printf("testChanClosed before:%t after:%t\r\n", before, after)
 }
 
+func emptyAndNilChan() {
+    c1 := make(chan int)
+    if c1 == nil {
+        fmt.Printf("emptyAndNilChan no buffer chan is nil\r\n")
+    } else {
+        fmt.Printf("emptyAndNilChan no buffer chan is not nil\r\n")
+    }
+
+    // chan 为nil，是否阻塞
+    /*
+    chan 为nil，则接收数据为非阻塞则直接返回，否则直接阻塞, 相关代码如下：
+    if c == nil {
+        if !block {
+            return
+        }
+        gopark(nil, nil, waitReasonChanReceiveNilChan, traceEvGoStop, 2)
+        throw("unreachable")
+    }
+
+    chan 为nil, 非阻塞则返回，阻塞则休眠
+      if c == nil {
+        if !block {
+          return false
+        }
+        gopark(nil, nil, waitReasonChanSendNilChan, traceEvGoStop, 2)
+        throw("unreachable")
+      }
+    总结 nil的chan发送和接收全是休眠，为nil且非阻塞情况还没找到对应的程序case
+     */
+    go func() {
+        //var c2 chan int
+        c2 := make(chan int, 10)
+        go func() {
+            time.Sleep(100 * time.Millisecond)
+            //c2 = nil //一旦被赋值则直接休眠
+            a := <- c2
+            fmt.Printf("emptyAndNilChan sleep c2 get a:%d\r\n", a)
+        }()
+        c2 <- 10
+        //time.Sleep(200 * time.Millisecond)
+        fmt.Printf("emptyAndNilChan c2 has send 10\r\n")
+    }()
+    time.Sleep(300* time.Millisecond)
+    fmt.Printf("emptyAndNilChan nil chan can \r\n")
+}
+
+
 func main() {
 	simpleUse()
     randChan()
     forSelectOnlyOneCase()
 	testChanClosed()
+    emptyAndNilChan()
 
-    chan2 := make(chan int)
-    if chan2 == nil {
-        fmt.Printf("no buffer chan is nil")
-    } else {
-        fmt.Printf("no buffer chan is not nil")
-    }
+
     //直接进入休眠状态
 
     //chan3 := make(chan int, 10)
