@@ -129,7 +129,7 @@ func emptyAndNilChan() {
         fmt.Printf("emptyAndNilChan no buffer chan is not nil\r\n")
     }
 
-    // chan 为nil，是否阻塞
+    // chan 为nil，是否阻塞, 只有select case: <- c,对应chan传递的阻塞变量为false
     /*
     chan 为nil，则接收数据为非阻塞则直接返回，否则直接阻塞, 相关代码如下：
     if c == nil {

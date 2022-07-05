@@ -53,8 +53,17 @@ func interfaceIsNil() {
 }
 
 
+//本质都是声明的int数组
+func interfaceEqualArray() {
+	var p [100]int
+	var m interface{} = [...]int{99:0}
+	fmt.Printf("interfaceEqualArray p == m:%t\r\n", p == m)
+}
+
+
 func main() {
 	appendInterface()
 	afterRefactor()
 	interfaceIsNil()
+	interfaceEqualArray()
 }
