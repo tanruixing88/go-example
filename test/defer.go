@@ -57,6 +57,14 @@ func foo4() (i int) {
 	return i
 }
 
+// panic 先输出defer倒序，然后输出panic
+func deferPanic() {
+	defer func() { fmt.Printf("deferPanic 1 \r\n") }()
+	defer func() { fmt.Printf("deferPanic 2 \r\n") }()
+	defer func() { fmt.Printf("deferPanic 3 \r\n") }()
+	panic("panic \r\n")
+}
+
 func main() {
 	deferFuncParam1()
 	r := foo1()
@@ -67,4 +75,5 @@ func main() {
 	fmt.Printf("foo3 ret:%d\r\n", r)
 	r = foo4()
 	fmt.Printf("foo4 ret:%d\r\n", r)
+	//deferPanic()
 }
