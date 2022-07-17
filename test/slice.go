@@ -78,6 +78,49 @@ func testForRangeLoop() {
 	fmt.Printf("\r\n")
 }
 
+func testAppend() {
+	// s, a, b 地址都不一样
+	s := []int{1,2,3}
+	b := append(s, 4)
+	a := append(s, 5)
+	fmt.Printf("testAppend s:%+v a:%+v\r\n", s, a)
+	fmt.Printf("testAppend s addr:%p b addr:%p a addr:%p\r\n", &s, &b, &a)
+
+	s1 := make([]int, 5, 10)
+	s1[0] = 1
+	s1[1] = 2
+	s1[2] = 3
+	b1 := append(s1, 4)
+	c1 := append(s1, 5)
+	//a1 := append(s1, 5)
+	//fmt.Printf("testAppend s1:%+v a1:%+v b1:%+v\r\n", s1, a1, b1)
+	//fmt.Printf("testAppend s1 addr:%p a1 addr:%p b1 addr:%p\r\n", &s1, &a1, &b1)
+	// b1 c1 结果全为[1 2 3 0 0 5], c1的append会修改b1的值
+	fmt.Printf("testAppend s1:%+v b1:%+v c1:%+v\r\n", s1,  b1, c1)
+	fmt.Printf("testAppend s1 addr:%p b1 addr:%p c1 addr:%p\r\n", &s1[0], &b1[0], &c1[0])
+}
+
+
+func Test1(s []int) {
+	fmt.Printf("Test1 append before s0:%p s1:%p\r\n", &s[0], &s[1])
+	s = append(s, 0)
+	fmt.Printf("Test1 append after s0:%p s1:%p\r\n", &s[0], &s[1])
+	for i := range s {
+		s[i]++
+	}
+}
+
+func testAppendV1() {
+	s1 := []int{1,2}
+	s2 := s1
+	fmt.Printf("testAppendV1 append before s1[0]:%p s1[1]:%p\r\n", &s1[0], &s1[1])
+	fmt.Printf("testAppendV1 append before s2[0]:%p s2[1]:%p\r\n", &s2[0], &s2[1])
+	s2 = append(s2, 3)
+	fmt.Printf("testAppendV1 append after s2:%p s2:%p\r\n", &s2[0], &s2[1])
+	Test1(s1)
+	Test1(s2)
+	fmt.Printf("testAppendV1 s1:%+v s2:%+v\r\n", s1, s2)
+}
 
 
 
@@ -146,4 +189,6 @@ func main() {
 	fmt.Printf("s11:%+v\r\n", s11[len(s11):])
 	fmt.Printf("s11:%+v\r\n", s11[3:]) // 若打印s11[4:]则会引发panic
 
+	testAppend()
+	testAppendV1()
 }
