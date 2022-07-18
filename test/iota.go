@@ -7,7 +7,10 @@ const  (
 	b = iota
 )
 
+//iota 按照声明次序顺次自增
 const (
+	name1 = "menglu"
+	name2 = "menglu"
 	name = "menglu"
 	c    = iota
 	d    = iota

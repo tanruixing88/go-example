@@ -81,17 +81,18 @@ func testForRangeLoop() {
 func testAppend() {
 	// s, a, b 地址都不一样
 	s := []int{1,2,3}
-	b := append(s, 4)
-	a := append(s, 5)
-	fmt.Printf("testAppend s:%+v a:%+v\r\n", s, a)
+	b := append(s, 4) // 做了深拷贝
+	a := append(s, 5) // 做了深拷贝
+	fmt.Printf("testAppend s:%+v len:%d cap:%d a:%+v len:%d cap:%d b:%+v len:%d cap:%d \r\n",
+		s, len(s), cap(s), a, len(a), cap(a), b, len(b), cap(b))
 	fmt.Printf("testAppend s addr:%p b addr:%p a addr:%p\r\n", &s, &b, &a)
 
 	s1 := make([]int, 5, 10)
 	s1[0] = 1
 	s1[1] = 2
 	s1[2] = 3
-	b1 := append(s1, 4)
-	c1 := append(s1, 5)
+	b1 := append(s1, 4) //浅拷贝
+	c1 := append(s1, 5) //浅拷贝
 	//a1 := append(s1, 5)
 	//fmt.Printf("testAppend s1:%+v a1:%+v b1:%+v\r\n", s1, a1, b1)
 	//fmt.Printf("testAppend s1 addr:%p a1 addr:%p b1 addr:%p\r\n", &s1, &a1, &b1)
@@ -122,21 +123,26 @@ func testAppendV1() {
 	fmt.Printf("testAppendV1 s1:%+v s2:%+v\r\n", s1, s2)
 }
 
+func arrayAppend() {
+	var s3 [10]int
+	s4 := s3[5:6]
+	fmt.Printf("arrayAppend s3 type:%s s4 type:%s \r\n", reflect.TypeOf(s3), reflect.TypeOf(s4))
+	fmt.Printf("arrayAppend s3 len:%d cap:%d\r\n", len(s3), cap(s3))
+	fmt.Printf("arrayAppend s4 len:%d cap:%d\r\n", len(s4), cap(s4))
+	s4 = append(s4, 5)
+	//输出 s4 [0 5] s3 [0 0 0 0 0 0 5 0 0 0]
+	fmt.Printf("arrayAppend s4 val:%+v s3:%+v\r\n", s4, s3)
+}
+
 
 func common() {
 	var s1 [1]int
 	s1[0] = 1
 	//s1 长度是一的数组，不是slice类型, 不能用append
 	var s2 []int
-	s2 = append(s2, 1)
+	s2 = append(s2, 1) // 虽然s2为nil，但还是可以append
 	//s1 = append(s2, 2) //ide 会提示报错
-	fmt.Printf("s1 type:%s s2 type:%s \r\n", reflect.TypeOf(s1), reflect.TypeOf(s2))
-
-	var s3 [10]int
-	s4 := s3[5:6]
-	fmt.Printf("s3 type:%s s4 type:%s \r\n", reflect.TypeOf(s3), reflect.TypeOf(s4))
-	fmt.Printf("s3 len:%d cap:%d\r\n", len(s3), cap(s3))
-	fmt.Printf("s4 len:%d cap:%d\r\n", len(s4), cap(s4))
+	fmt.Printf("s1 type:%s s2 type:%s s2 val:%+v\r\n", reflect.TypeOf(s1), reflect.TypeOf(s2), s2)
 
 	orderLen := 5
 	order := make([]uint16, 2 * orderLen)
@@ -186,4 +192,5 @@ func main() {
 	testForRangeLoop()
 	testAppend()
 	testAppendV1()
+	arrayAppend()
 }

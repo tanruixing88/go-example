@@ -53,9 +53,26 @@ func lenValue() {
 	fmt.Printf("after modify len value:%d\r\n", len(m))
 }
 
+//会报fatal error: concurrent map read and map write
+//
+func concurrentReadWriteMap() {
+	m := make(map[int]int)
+	go func() {
+		for {
+			_ = m[1]
+		}
+	}()
+	go func() {
+		for {
+			m[2] = 2
+		}
+	}()
+	select {}
+}
 
 func main() {
 	//golang map 删除key并不会释放内存
 	deleteMapKeyCaller()
 	lenValue()
+	//concurrentReadWriteMap()
 }
