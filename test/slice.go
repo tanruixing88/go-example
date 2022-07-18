@@ -161,17 +161,9 @@ func common() {
 
 	//声明空和new的[]int均为nil
 	var s8 []int
-	s8IsNil := false
-	if s8 == nil {
-		s8IsNil = true
-	}
 	s9 := *new([]int)
-	s9IsNil := false
-	if s9 == nil {
-		s9IsNil = true
-	}
-
-	fmt.Printf("s8:%t s9:%t\r\n", s8IsNil, s9IsNil)
+	//打印都为true
+	fmt.Printf("s8:%t s9:%t\r\n", s8 == nil, s9 == nil)
 
 	s10 := []int{1,2,3}
 	appendModifyFunc := func(s []int) {
