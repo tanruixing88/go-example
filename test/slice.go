@@ -123,11 +123,7 @@ func testAppendV1() {
 }
 
 
-
-func main() {
-	testDeleteElemByIndex()
-	testNilAndEmptySlice()
-	testForRangeLoop()
+func common() {
 	var s1 [1]int
 	s1[0] = 1
 	//s1 长度是一的数组，不是slice类型, 不能用append
@@ -180,7 +176,7 @@ func main() {
 	s10 := []int{1,2,3}
 	appendModifyFunc := func(s []int) {
 		s = append(s, 4) //  单纯append并不会改变切片里的值
-		s[2] = 5 //单独修改还是结果被修改，但是前面加了append后就不一样了
+		s[2] = 5 //单独修改还是结果被修改，但是前面加了append后就不一样了,是因为容量不足发生了深拷贝
 	}
 	appendModifyFunc(s10)
 	fmt.Printf("s10:%+v\r\n", s10)
@@ -188,7 +184,14 @@ func main() {
 	s11 := []int{1,2,3}
 	fmt.Printf("s11:%+v\r\n", s11[len(s11):])
 	fmt.Printf("s11:%+v\r\n", s11[3:]) // 若打印s11[4:]则会引发panic
+}
 
+
+func main() {
+	common()
+	testDeleteElemByIndex()
+	testNilAndEmptySlice()
+	testForRangeLoop()
 	testAppend()
 	testAppendV1()
 }
