@@ -19,7 +19,8 @@ func simpleUse() {
     var c1 chan int
     c2 := make(chan int)
     c3 := make(chan int)
-    fmt.Printf("simpleUse c1 is nil:%t, c2:%+v c3:%+v\r\n", &c1, c2, c3)
+    //地址都是不一样的,值对应也不一样
+    fmt.Printf("simpleUse c1 is nil:%p, c2:%+v c3:%+v\r\n", &c1, &c2, &c3)
 }
 
 //单通道的生产和消费
