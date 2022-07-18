@@ -83,6 +83,7 @@ func bucketSort(a []int, bucketSize int) {
 
 //堆排序
 //https://www.runoob.com/w3cnote/heap-sort.html
+//为何为j-1/2？初始index为0 1 2 。。。 其中0为堆顶，1,2为堆下一层，所以用 j-1/2使得1和2下标均能对应0下标
 func heapSort(a []int) {
 	n := len(a)
 	if n <= 1 {
