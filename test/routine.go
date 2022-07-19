@@ -6,6 +6,7 @@ import (
 	"runtime"
 	"strconv"
 	"sync"
+	"time"
 )
 
 /**
@@ -84,10 +85,24 @@ func calculate(in ...[]int) []int {
 	return result
 }
 
+//关闭chan后前面监听通道就会被唤醒，输出GoroutineMain
+func recvCloseChannel() {
+	ch := make(chan bool)
+	go func() {
+		<-ch
+		fmt.Printf("Goroutine")
+	}()
+	time.Sleep(2 * time.Millisecond)
+	close(ch)
+	time.Sleep(2 * time.Millisecond)
+	fmt.Printf("Main\r\n")
+}
+
 
 func main() {
 	getGoRoutineId()
 	goroutineInteract()
+	recvCloseChannel()
 	/*
 	//main 函数结束都结束，非main函数，子协程都会存在
 	fmt.Printf("main start\r\n")
