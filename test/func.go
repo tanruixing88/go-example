@@ -18,7 +18,16 @@ func emptyFuncEqual() {
 	//fmt.Println(func(){}== func(){})
 }
 
+func noParam(a ...int) {
+	fmt.Printf("a:%+v\r\n", a)
+}
+
+func testNoParam() {
+	noParam()
+}
+
 
 func main() {
 	testValCopy()
+	testNoParam()
 }
