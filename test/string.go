@@ -18,9 +18,20 @@ func string2byteListNoMemCopy() {
 	fmt.Printf("string2byteListNoMemCopy a:%s byteList:%+v\r\n", a, byteList)
 }
 
+type integer int
+func (i integer) String() string {
+	return "hello"
+}
+
+//输出hello
+func printInt() {
+	fmt.Printf("%s\r\n", integer(5))
+}
+
 func main() {
 	s := "123456"
 	//s[1] = '9' // 编译不过：cannot assign to s[1] (strings are immutable)
 	fmt.Printf("s:%s", s)
 	string2byteListNoMemCopy()
+	printInt()
 }
