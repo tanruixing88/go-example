@@ -65,6 +65,15 @@ func deferPanic() {
 	panic("panic \r\n")
 }
 
+func deferFunc() {
+	fmt.Printf("deferFunc:")
+	f := func(){fmt.Printf("A")}
+	defer f()
+	f = func() {fmt.Printf("B")}
+	defer f()
+	fmt.Printf("\r\n")
+}
+
 func main() {
 	deferFuncParam1()
 	r := foo1()
@@ -76,4 +85,5 @@ func main() {
 	r = foo4()
 	fmt.Printf("foo4 ret:%d\r\n", r)
 	//deferPanic()
+	deferFunc()
 }
