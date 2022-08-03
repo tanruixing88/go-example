@@ -168,6 +168,15 @@ func emptyAndNilChan() {
     fmt.Printf("emptyAndNilChan nil chan can \r\n")
 }
 
+//输出为5
+func readCloseChan() {
+    c := make(chan int, 5)
+    c <- 5
+    c <- 6
+    close(c)
+    fmt.Printf("read c:%d\r\n", <-c)
+}
+
 
 func main() {
 	simpleUse()
@@ -175,6 +184,7 @@ func main() {
     forSelectOnlyOneCase()
 	testChanClosed()
     emptyAndNilChan()
+	readCloseChan()
 
 
     //直接进入休眠状态
