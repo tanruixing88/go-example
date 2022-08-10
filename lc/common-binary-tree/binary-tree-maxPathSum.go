@@ -238,6 +238,26 @@ func preVisit(root *TreeNode) {
 	preVisit(root.Right)
 }
 
+func midVisit(root *TreeNode) {
+	if root == nil {
+		return
+	}
+
+	midVisit(root.Left)
+	fmt.Printf("%d ", root.Val)
+	midVisit(root.Right)
+}
+
+func nxtVisit(root *TreeNode) {
+	if root == nil {
+		return
+	}
+
+	nxtVisit(root.Left)
+	nxtVisit(root.Right)
+	fmt.Printf("%d ", root.Val)
+}
+
 type TreeChainNode struct {
 	TreeNode *TreeNode
 	Next *TreeChainNode
@@ -274,7 +294,10 @@ func preVisitNoRecursion(root *TreeNode) {
 	fmt.Printf("\r\n")
 }
 
-func preVisitDfs(root *TreeNode) {
+/*
+ * order 1 前序遍历 2 中序遍历 3 后续遍历
+ */
+func dfsBinaryTree(root *TreeNode, order int) {
 	if root == nil {
 		return
 	}
@@ -282,12 +305,19 @@ func preVisitDfs(root *TreeNode) {
 	traceList := []*Trace{{root, false, false}}
 	for len(traceList) > 0 {
 		if traceList[len(traceList)-1].TraceL && traceList[len(traceList)-1].TraceR {
+			//后续遍历
+			if order == 3 {
+				fmt.Printf("%d ", traceList[len(traceList)-1].Node.Val)
+			}
 			traceList = traceList[:len(traceList)-1]
 			continue
 		}
 
-		if !traceList[len(traceList)-1].TraceL && !traceList[len(traceList)-1].TraceR {
-			fmt.Printf("%d ", traceList[len(traceList)-1].Node.Val)
+		//前序遍历
+		if order == 1 {
+			if !traceList[len(traceList)-1].TraceL && !traceList[len(traceList)-1].TraceR {
+				fmt.Printf("%d ", traceList[len(traceList)-1].Node.Val)
+			}
 		}
 
 		if !traceList[len(traceList)-1].TraceL {
@@ -295,6 +325,13 @@ func preVisitDfs(root *TreeNode) {
 			if traceList[len(traceList)-1].Node.Left != nil {
 				traceList = append(traceList, &Trace{traceList[len(traceList)-1].Node.Left, false, false})
 				continue
+			}
+		}
+
+		//中序遍历
+		if order == 2 {
+			if traceList[len(traceList)-1].TraceL || !traceList[len(traceList)-1].TraceR {
+				fmt.Printf("%d ", traceList[len(traceList)-1].Node.Val)
 			}
 		}
 
@@ -376,29 +413,38 @@ func main() {
 
 		   1
 		 /   \
-		-2    -3
+		2     3
 	   /  \     \
-	  1	   3    -2
+	  4	   5     6
 	 /
-	-1
+	7
 
 	*/
-	node7 = &TreeNode{-1, nil, nil}
-	node6 = &TreeNode{-2, node7, nil}
-	node5 = &TreeNode{3, nil, nil}
-	node4 = &TreeNode{1, nil, nil}
-	node3 = &TreeNode{-3, nil, node6}
-	node2 = &TreeNode{-2, node4, node5}
+	node7 = &TreeNode{7, nil, nil}
+	node6 = &TreeNode{6, node7, nil}
+	node5 = &TreeNode{5, nil, nil}
+	node4 = &TreeNode{4, node7, nil}
+	node3 = &TreeNode{3, nil, node6}
+	node2 = &TreeNode{2, node4, node5}
 	node1 = &TreeNode{1, node2, node3}
 	max = maxPathSum(node1)
 	fmt.Printf("max path sum:%+v\r\n", max) // expect 3
+	fmt.Printf("nxtVisit:\r\n")
+	nxtVisit(node1)
+	fmt.Printf("\r\nnxtDfs:\r\n")
+	dfsBinaryTree(node1, 3)
+	fmt.Printf("midVisit:\r\n")
+	midVisit(node1)
+	fmt.Printf("\r\nmidDfs:\r\n")
+	dfsBinaryTree(node1, 2)
 	fmt.Printf("preVisit:\r\n")
 	preVisit(node1)
+	fmt.Printf("\r\npreDfs:\r\n")
+	dfsBinaryTree(node1, 1)
 	fmt.Printf("\r\n")
 	fmt.Printf("chain: \r\n")
 	preVisitNoRecursion(node1)
 	fmt.Printf("dfs: \r\n")
-	preVisitDfs(node1)
 	fmt.Printf("stack: \r\n")
 	preVisitStack(node1)
 	fmt.Printf("\r\n")
