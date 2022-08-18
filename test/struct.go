@@ -31,6 +31,15 @@ func (a *A) Show() {
 	fmt.Printf("name:%s\r\n", a.name)
 }
 
+func structNil() {
+	var x *struct{
+		s [][32]byte
+	}
+
+	//len 方法不管是否为nil访问结构体成员，按照类型给出长度, 但若实际访问值则直接报错
+	fmt.Printf("structNil len:%d\r\n", len(x.s[99]))
+}
+
 //声明了String方法，直接打印方法返回的信息
 /*
 func (a A) String() string {
@@ -95,4 +104,6 @@ func main() {
 	fmt.Printf("struct  cmp:%t\r\n", (Server{"server1", "ip1"}) == (Server{"server1", "ip1"}));
 	fmt.Printf("[...]string{'1'} == [...]string{'1'} cmp:%t\r\n", [...]string{"1"} == [...]string{"1"})
 	//切片不能比较//fmt.Printf("[]string{'1'} == []string{'1'} cmp:%t\r\n", []string{"1"} == []string{"1"})
+
+	structNil()
 }
