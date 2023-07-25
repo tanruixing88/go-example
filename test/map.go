@@ -28,7 +28,6 @@ func deleteMapKey() {
 	runtime.GC() //加延迟时间并未有继续gc的处理, 内存和上次是一样的
 	printMemStats("sleep del keys")
 
-
 	m = nil //这样会整体去掉map
 	runtime.GC()
 	printMemStats("m = nil")
@@ -70,7 +69,33 @@ func concurrentReadWriteMap() {
 	select {}
 }
 
+func modVal() {
+	intMap := make(map[int]int)
+	intMap[1] = 1
+	intMap[2] = 2
+	v2, _ := intMap[2]
+	fmt.Printf("v2:%d\r\n", v2)
+	v2 = 3
+	fmt.Printf("intMap:%+v\r\n", intMap)
+}
+
+type structA struct {
+	Count int
+}
+
+func getACount() {
+	aMap := make(map[string]structA)
+	aMap["a"] = structA{
+		Count: 1,
+	}
+
+	bVal := aMap["b"]
+	fmt.Printf("bVal:%d\r\n", bVal.Count)
+}
+
 func main() {
+	getACount()
+	modVal()
 	//golang map 删除key并不会释放内存
 	deleteMapKeyCaller()
 	lenValue()
