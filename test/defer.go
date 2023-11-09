@@ -16,7 +16,7 @@ func deferFuncParam1() {
 // 但是匿名变量的值还为0，返回结果仍为0
 func foo1() int {
 	i := 0
-	defer func() { i++ } ()
+	defer func() { i++ }()
 	return i
 }
 
@@ -27,7 +27,7 @@ func foo2() int {
 		fmt.Printf("foo2 defer enter:%d\r\n", i)
 		i++
 		fmt.Printf("foo2 defer exit:%d\r\n", i)
-	} (i)
+	}(i)
 	i = 4
 	return i
 }
@@ -40,7 +40,7 @@ func foo3() (i int) {
 		fmt.Printf("foo3 defer enter:%d\r\n", i)
 		i++
 		fmt.Printf("foo3 defer exit:%d\r\n", i)
-	} (i)
+	}(i)
 	i = 4
 	return i
 }
@@ -52,9 +52,20 @@ func foo4() (i int) {
 		fmt.Printf("foo4 defer enter:%d\r\n", i)
 		i++
 		fmt.Printf("foo4 defer exit:%d\r\n", i)
-	} ()
+	}()
 	i = 4
 	return i
+}
+
+//返回值声明带参数名, defer函数并不锁定i = 10入参，所以会更新参数i = 4 -> i = 5
+func foo4_V1() {
+	i := 10
+	defer func() {
+		fmt.Printf("foo4_V1 defer enter:%d\r\n", i)
+		i++
+		fmt.Printf("foo4_V1 defer exit:%d\r\n", i)
+	}()
+	i = 4
 }
 
 // panic 先输出defer倒序，然后输出panic
@@ -67,9 +78,9 @@ func deferPanic() {
 
 func deferFunc() {
 	fmt.Printf("deferFunc:")
-	f := func(){fmt.Printf("A")}
+	f := func() { fmt.Printf("A") }
 	defer f()
-	f = func() {fmt.Printf("B")}
+	f = func() { fmt.Printf("B") }
 	defer f()
 	fmt.Printf("\r\n")
 }
@@ -84,6 +95,7 @@ func main() {
 	fmt.Printf("foo3 ret:%d\r\n", r)
 	r = foo4()
 	fmt.Printf("foo4 ret:%d\r\n", r)
+	foo4_V1()
 	//deferPanic()
 	deferFunc()
 }

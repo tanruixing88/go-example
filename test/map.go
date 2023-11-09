@@ -56,6 +56,9 @@ func lenValue() {
 //
 func concurrentReadWriteMap() {
 	m := make(map[int]int)
+	m[1] = 1
+	m[2] = 2
+	m[3] = 3
 	go func() {
 		for {
 			_ = m[1]
@@ -63,7 +66,12 @@ func concurrentReadWriteMap() {
 	}()
 	go func() {
 		for {
-			m[2] = 2
+			_ = m[2]
+		}
+	}()
+	go func() {
+		for {
+			_ = m[3]
 		}
 	}()
 	select {}
@@ -99,5 +107,5 @@ func main() {
 	//golang map 删除key并不会释放内存
 	deleteMapKeyCaller()
 	lenValue()
-	//concurrentReadWriteMap()
+	concurrentReadWriteMap()
 }
