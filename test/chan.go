@@ -117,8 +117,9 @@ func testChanClosed() {
 	before := isChanClosed1(c1)
 	close(c1)
 	after := isChanClosed1(c1)
+	_, ok := <-c1 //说明ok代指是否还有数据且是否被close
 
-	fmt.Printf("testChanClosed before:%t after:%t\r\n", before, after)
+	fmt.Printf("testChanClosed before:%t after:%t ok:%t\r\n", before, after, ok)
 }
 
 func emptyAndNilChan() {
@@ -192,23 +193,7 @@ func isChanPanic() {
 	//fmt.Printf("isChanPanic v:%d ok:%t\r\n", v, ok)
 }
 
-func IsChanClose(c chan interface{}) bool {
-	if c == nil {
-		return true
-	}
-
-	_, ok := <-c
-	return !ok
-}
-
-func closeChan() {
-	c := make(chan interface{}, 1)
-	close(c)
-	fmt.Printf("chan c is closed:%t\r\n", IsChanClose(c))
-}
-
 func main() {
-	closeChan()
 	isChanPanic()
 	simpleUse()
 	randChan()
