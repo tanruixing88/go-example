@@ -115,11 +115,14 @@ func testChanClosed() {
 	}
 
 	before := isChanClosed1(c1)
+	before1 := IsChanClosed(c1)
 	close(c1)
 	after := isChanClosed1(c1)
+	after1 := IsChanClosed(c1)
 	_, ok := <-c1 //说明ok代指是否还有数据且是否被close
 
 	fmt.Printf("testChanClosed before:%t after:%t ok:%t\r\n", before, after, ok)
+	fmt.Printf("testChanClosed before1:%t after1:%t ok:%t\r\n", before1, after1, ok)
 }
 
 func emptyAndNilChan() {
@@ -191,6 +194,19 @@ func isChanPanic() {
 	//c <- 13 //给一个关闭的chan发送数据会panic
 	//v, ok := <-c
 	//fmt.Printf("isChanPanic v:%d ok:%t\r\n", v, ok)
+}
+
+func IsChanClosed(c interface{}) bool {
+	if reflect.TypeOf(c).Kind() != reflect.Chan {
+		return false
+	}
+
+	return (*(**struct {
+		_, _   uint
+		_      unsafe.Pointer
+		_      uint16
+		closed uint32
+	})(unsafe.Pointer(uintptr(unsafe.Pointer(&c)) + unsafe.Sizeof(uint(0))))).closed != 0
 }
 
 func main() {
