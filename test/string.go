@@ -6,10 +6,9 @@ import (
 	"unsafe"
 )
 
-
 /*
 * 字符串转成切片，会产生拷贝。严格来说，只要是发生类型强转都会发生内存拷贝
-*/
+ */
 //字符串转[]byte类型
 func string2byteListNoMemCopy() {
 	a := "abc"
@@ -19,6 +18,7 @@ func string2byteListNoMemCopy() {
 }
 
 type integer int
+
 func (i integer) String() string {
 	return "hello"
 }
@@ -28,7 +28,15 @@ func printInt() {
 	fmt.Printf("%s\r\n", integer(5))
 }
 
+func longStr() {
+	str := `hello
+world
+v2.0`
+	fmt.Println(str)
+}
+
 func main() {
+	longStr()
 	s := "123456"
 	//s[1] = '9' // 编译不过：cannot assign to s[1] (strings are immutable)
 	fmt.Printf("s:%s", s)

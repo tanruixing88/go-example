@@ -8,7 +8,7 @@ import (
 //输出为1,因为实际是append了[]int类型的元素
 func appendInterface() {
 	var nums1 []interface{}
-	nums2 := []int{1,2,3}
+	nums2 := []int{1, 2, 3}
 	nums3 := append(nums1, nums2)
 	fmt.Printf("%d\r\n", len(nums3))
 }
@@ -19,6 +19,7 @@ type service interface {
 }
 
 type v6 struct{}
+
 func (*v6) Do() {}
 
 func getV6() *v6 {
@@ -49,19 +50,26 @@ func IsNil(i interface{}) bool {
 //判断一个interface是否为nil
 func interfaceIsNil() {
 	var i interface{}
-	IsNil(i)
+	isNil := IsNil(i)
+	fmt.Printf("is Nil:%t\r\n", isNil)
 }
-
 
 //本质都是声明的int数组
 func interfaceEqualArray() {
 	var p [100]int
-	var m interface{} = [...]int{99:0}
+	var m interface{} = [...]int{99: 0}
 	fmt.Printf("interfaceEqualArray p == m:%t\r\n", p == m)
 }
 
+func getInterfaceStruct() {
+	v := uint64(200)
+	efv := (interface{})(v)
+	fmt.Printf("get interface struct efv:%+v\r\n", efv)
+	fmt.Println(efv)
+}
 
 func main() {
+	getInterfaceStruct()
 	appendInterface()
 	afterRefactor()
 	interfaceIsNil()

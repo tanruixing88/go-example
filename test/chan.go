@@ -209,7 +209,31 @@ func IsChanClosed(c interface{}) bool {
 	})(unsafe.Pointer(uintptr(unsafe.Pointer(&c)) + unsafe.Sizeof(uint(0))))).closed != 0
 }
 
+func closeNotice() {
+	newChan1 := make(chan int)
+	newChan2 := make(chan int)
+	newChan3 := make(chan int)
+	go func() {
+		fmt.Printf("goroutine 1 \r\n")
+		close(newChan1)
+	}()
+	go func() {
+		val1, ok := <-newChan1
+		//close关闭一个chan，没有数据， 输出ok是false
+		fmt.Printf("goroutine 2 . val1:%d ok:%t\r\n", val1, ok)
+		close(newChan2)
+	}()
+	go func() {
+		<-newChan2
+		fmt.Println("goroutine 3")
+		close(newChan3)
+	}()
+
+	time.Sleep(time.Second)
+}
+
 func main() {
+	closeNotice()
 	isChanPanic()
 	simpleUse()
 	randChan()
