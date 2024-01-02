@@ -18,9 +18,9 @@ type AI interface {
 //判断是否为空struct
 type A struct {
 	name string
-	age int
+	age  int
 	list []int
-	kv  map[int]int
+	kv   map[int]int
 }
 
 func (a A) IsEmpty() bool {
@@ -32,7 +32,7 @@ func (a *A) Show() {
 }
 
 func structNil() {
-	var x *struct{
+	var x *struct {
 		s [][32]byte
 	}
 
@@ -47,7 +47,23 @@ func (a A) String() string {
 }
 */
 
+func structEqual() {
+	s1 := Server{
+		ServerName: "server",
+		ServerIP:   "1.1.1.1",
+	}
+
+	s2 := Server{
+		ServerName: "server",
+		ServerIP:   "1.1.1.1",
+	}
+
+	fmt.Printf("s1 == s2 :%t\r\n", s1 == s2)
+}
+
 func main() {
+	structEqual()
+
 	//tag 的操作
 	s := Server{}
 	st := reflect.TypeOf(s)
@@ -56,14 +72,13 @@ func main() {
 	field2 := st.Field(1)
 	fmt.Printf("key2:%v\r\n", field2.Tag.Get("key2"))
 
-
 	//判断是否为空struct
 	var a A
 	//invalid operation: a == A{} (struct containing []int cannot be compared)
 	/*
-	if a == (A{}) {
-		fmt.Printf("a == A{} empty\r\n")
-	}
+		if a == (A{}) {
+			fmt.Printf("a == A{} empty\r\n")
+		}
 	*/
 
 	if a.IsEmpty() {
@@ -100,8 +115,8 @@ func main() {
 		fmt.Printf("a1 not nil\r\n")
 	}
 
-	fmt.Printf("pointer cmp:%t\r\n", (&Server{"server1", "ip1"}) == (&Server{"server1", "ip1"}));
-	fmt.Printf("struct  cmp:%t\r\n", (Server{"server1", "ip1"}) == (Server{"server1", "ip1"}));
+	fmt.Printf("pointer cmp:%t\r\n", (&Server{"server1", "ip1"}) == (&Server{"server1", "ip1"}))
+	fmt.Printf("struct  cmp:%t\r\n", (Server{"server1", "ip1"}) == (Server{"server1", "ip1"}))
 	fmt.Printf("[...]string{'1'} == [...]string{'1'} cmp:%t\r\n", [...]string{"1"} == [...]string{"1"})
 	//切片不能比较//fmt.Printf("[]string{'1'} == []string{'1'} cmp:%t\r\n", []string{"1"} == []string{"1"})
 

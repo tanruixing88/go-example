@@ -115,10 +115,10 @@ func testChanClosed() {
 	}
 
 	before := isChanClosed1(c1)
-	before1 := IsChanClosed(c1)
+	before1 := IsClosedChan(c1)
 	close(c1)
 	after := isChanClosed1(c1)
-	after1 := IsChanClosed(c1)
+	after1 := IsClosedChan(c1)
 	_, ok := <-c1 //说明ok代指是否还有数据且是否被close
 
 	fmt.Printf("testChanClosed before:%t after:%t ok:%t\r\n", before, after, ok)
@@ -196,7 +196,7 @@ func isChanPanic() {
 	//fmt.Printf("isChanPanic v:%d ok:%t\r\n", v, ok)
 }
 
-func IsChanClosed(c interface{}) bool {
+func IsClosedChan(c interface{}) bool {
 	if reflect.TypeOf(c).Kind() != reflect.Chan {
 		return false
 	}
