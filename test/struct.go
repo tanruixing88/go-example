@@ -61,7 +61,24 @@ func structEqual() {
 	fmt.Printf("s1 == s2 :%t\r\n", s1 == s2)
 }
 
+type HasList struct {
+	Val      int
+	ElemList []int
+	ElemMap  map[int]int
+}
+
+func printEmptyListStruct() {
+	hasList := &HasList{
+		Val:      1,
+		ElemList: []int{1, 2, 3},
+	}
+
+	hasList.ElemList = make([]int, 0)
+	fmt.Printf("print has list:%+v\r\n", hasList)
+}
+
 func main() {
+	printEmptyListStruct()
 	structEqual()
 
 	//tag 的操作

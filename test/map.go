@@ -101,7 +101,40 @@ func getACount() {
 	fmt.Printf("bVal:%d\r\n", bVal.Count)
 }
 
+func delKeyAgain(myMap map[int]int) {
+	delete(myMap, 2)
+}
+
+func delKey(myMap map[int]int) {
+	delete(myMap, 1)
+	delKeyAgain(myMap)
+}
+
+func delMapKeyInFunc() {
+	myMap := map[int]int{
+		1: 1,
+		2: 2,
+		3: 3,
+	}
+
+	delKey(myMap)
+	fmt.Printf("after delete myMap:%+v\r\n", myMap)
+}
+
+func rangeNilMap() {
+	var intMap map[int]int
+
+	fmt.Printf("rangeNilMap start\r\n")
+	for k, v := range intMap {
+		fmt.Printf("intMap k:%d v:%d \r\n", k, v)
+	}
+
+	fmt.Printf("rangeNilMap end\r\n")
+}
+
 func main() {
+	rangeNilMap()
+	delMapKeyInFunc()
 	getACount()
 	modVal()
 	//golang map 删除key并不会释放内存
