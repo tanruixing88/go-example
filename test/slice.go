@@ -18,25 +18,24 @@ func deleteElemByIndex(s []int, index int) []int {
 }
 
 func testDeleteElemByIndex() {
-	s := []int{1,2,3,4}
+	s := []int{1, 2, 3, 4}
 	fmt.Printf("s:%+v", s)
 	index := 0
 	d := deleteElemByIndex(s, index)
 	fmt.Printf("deleteElemByIndex index:%d s:%+v\r\n", index, d)
 
-	s = []int{1,2,3,4}
+	s = []int{1, 2, 3, 4}
 	fmt.Printf("s:%+v", s)
 	index = 2
 	d = deleteElemByIndex(s, index)
 	fmt.Printf("deleteElemByIndex index:%d s:%+v\r\n", index, d)
 
-	s = []int{1,2,3,4}
+	s = []int{1, 2, 3, 4}
 	fmt.Printf("s:%+v", s)
 	index = 3
 	d = deleteElemByIndex(s, index)
 	fmt.Printf("deleteElemByIndex index:%d s:%+v\r\n", index, d)
 }
-
 
 //空指针和空切片判断
 func testNilAndEmptySlice() {
@@ -46,8 +45,8 @@ func testNilAndEmptySlice() {
 
 	//s1的data为0,但s2和s3的data值均为824634137496, nil的切片没有单独存储，但是所有空切片指向了同样的地址
 	fmt.Printf("testNilAndEmptySlice s1 pointer:%+v, s2 pointer:%+v, s3 pointer:%+v\r\n",
-	*(*reflect.SliceHeader)(unsafe.Pointer(&s1)), *(*reflect.SliceHeader)(unsafe.Pointer(&s2)),
-	*(*reflect.SliceHeader)(unsafe.Pointer(&s3)))
+		*(*reflect.SliceHeader)(unsafe.Pointer(&s1)), *(*reflect.SliceHeader)(unsafe.Pointer(&s2)),
+		*(*reflect.SliceHeader)(unsafe.Pointer(&s3)))
 
 	//申请的长度不为0,则内存地址是不一样的
 	s4 := make([]int, 1)
@@ -69,7 +68,7 @@ func testNilAndEmptySlice() {
 //
 func testForRangeLoop() {
 	fmt.Printf("testForRangeLoop:")
-	s := []int{1,2,3,4,5}
+	s := []int{1, 2, 3, 4, 5}
 	for _, v := range s {
 		s = append(s, v)
 		//输出6 7 8 9 10
@@ -80,7 +79,7 @@ func testForRangeLoop() {
 
 func testAppend() {
 	// s, a, b 地址都不一样
-	s := []int{1,2,3}
+	s := []int{1, 2, 3}
 	b := append(s, 4) // 做了深拷贝
 	a := append(s, 5) // 做了深拷贝
 	fmt.Printf("testAppend s:%+v len:%d cap:%d a:%+v len:%d cap:%d b:%+v len:%d cap:%d \r\n",
@@ -97,10 +96,9 @@ func testAppend() {
 	//fmt.Printf("testAppend s1:%+v a1:%+v b1:%+v\r\n", s1, a1, b1)
 	//fmt.Printf("testAppend s1 addr:%p a1 addr:%p b1 addr:%p\r\n", &s1, &a1, &b1)
 	// b1 c1 结果全为[1 2 3 0 0 5], c1的append会修改b1的值
-	fmt.Printf("testAppend s1:%+v b1:%+v c1:%+v\r\n", s1,  b1, c1)
+	fmt.Printf("testAppend s1:%+v b1:%+v c1:%+v\r\n", s1, b1, c1)
 	fmt.Printf("testAppend s1 addr:%p b1 addr:%p c1 addr:%p\r\n", &s1[0], &b1[0], &c1[0])
 }
-
 
 func Test1(s []int) {
 	fmt.Printf("Test1 append before s0:%p s1:%p\r\n", &s[0], &s[1])
@@ -112,7 +110,7 @@ func Test1(s []int) {
 }
 
 func testAppendV1() {
-	s1 := []int{1,2}
+	s1 := []int{1, 2}
 	s2 := s1
 	fmt.Printf("testAppendV1 append before s1[0]:%p s1[1]:%p\r\n", &s1[0], &s1[1])
 	fmt.Printf("testAppendV1 append before s2[0]:%p s2[1]:%p\r\n", &s2[0], &s2[1])
@@ -134,7 +132,6 @@ func arrayAppend() {
 	fmt.Printf("arrayAppend s4 val:%+v s3:%+v\r\n", s4, s3)
 }
 
-
 func common() {
 	var s1 [1]int
 	s1[0] = 1
@@ -145,11 +142,11 @@ func common() {
 	fmt.Printf("s1 type:%s s2 type:%s s2 val:%+v\r\n", reflect.TypeOf(s1), reflect.TypeOf(s2), s2)
 
 	orderLen := 5
-	order := make([]uint16, 2 * orderLen)
+	order := make([]uint16, 2*orderLen)
 	for i := 0; i < len(order); i++ {
 		order[i] = uint16(i + 1)
 	}
-	pollOrder := order[:orderLen:(orderLen+4)] // 这里的双冒号是指新的切片cap, 新的cap受制于原有slice cap长度限制
+	pollOrder := order[:orderLen:(orderLen + 4)] // 这里的双冒号是指新的切片cap, 新的cap受制于原有slice cap长度限制
 	lockOrder := order[orderLen:][:orderLen:orderLen]
 	fmt.Printf("pollOrder len:%d cap:%d val:%+v\r\n", len(pollOrder), cap(pollOrder), pollOrder)
 	fmt.Printf("lockOrder len:%d cap:%d val:%+v\r\n", len(lockOrder), cap(lockOrder), lockOrder)
@@ -161,7 +158,7 @@ func common() {
 	fmt.Printf("s5 slice 0 :%+v  s5 3:%+v len(s5):%d cap(s5):%d  s5 type:%s\r\n", s5[:0], s5[:3], len(s5), cap(s5), reflect.TypeOf(s5))
 	//s5 = append(s5, 4) //数组无法append
 
-	s6 := []int{1,2,3,4}
+	s6 := []int{1, 2, 3, 4}
 	s7 := append(s6[:1], s6[2:]...)
 	fmt.Printf("delete elem 2. s6:%+v s7:%+v\r\n", s6, s7)
 
@@ -171,21 +168,35 @@ func common() {
 	//打印都为true
 	fmt.Printf("s8:%t s9:%t\r\n", s8 == nil, s9 == nil)
 
-	s10 := []int{1,2,3}
+	s10 := []int{1, 2, 3}
 	appendModifyFunc := func(s []int) {
 		s = append(s, 4) //  单纯append并不会改变切片里的值
-		s[2] = 5 //单独修改还是结果被修改，但是前面加了append后就不一样了,是因为容量不足发生了深拷贝
+		s[2] = 5         //单独修改还是结果被修改，但是前面加了append后就不一样了,是因为容量不足发生了深拷贝
 	}
 	appendModifyFunc(s10)
 	fmt.Printf("s10:%+v\r\n", s10)
 
-	s11 := []int{1,2,3}
+	s11 := []int{1, 2, 3}
 	fmt.Printf("s11:%+v\r\n", s11[len(s11):])
 	fmt.Printf("s11:%+v\r\n", s11[3:]) // 若打印s11[4:]则会引发panic
 }
 
+func changeSlice(s []int) {
+	fmt.Printf("before change s:%+v saddr:%p\r\n", s, &s)
+	s = s[3:]
+	fmt.Printf("after change s:%+v saddr:%p\r\n", s, &s)
+	s[2] = 8
+	fmt.Printf("finish proc s:%+v saddr:%p\r\n", s, &s)
+}
+func changeSliceByFunc() {
+	s := []int{1, 2, 3, 4, 5, 6}
+	fmt.Printf("before all s:%+v saddr:%p\r\n", s, &s)
+	changeSlice(s)
+	fmt.Printf("finish all s:%+v saddr:%p\r\n", s, &s)
+}
 
 func main() {
+	changeSliceByFunc()
 	common()
 	testDeleteElemByIndex()
 	testNilAndEmptySlice()
