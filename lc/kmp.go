@@ -13,46 +13,46 @@ func kmp(s string, p string) int {
 
 	/* 这种方案需要区分奇偶数*/
 	/*
-	for j := 2; j < n; j++ {
-		lj := 0
-		hj := 0
+		for j := 2; j < n; j++ {
+			lj := 0
+			hj := 0
 
-		if j % 2 == 0 {
-			lj = (j - 1) / 2
-			hj = (j - 1) / 2 + 1
-		} else {
-			lj = (j - 1) / 2 - 1
-			hj = (j - 1) / 2 + 1
-		}
+			if j % 2 == 0 {
+				lj = (j - 1) / 2
+				hj = (j - 1) / 2 + 1
+			} else {
+				lj = (j - 1) / 2 - 1
+				hj = (j - 1) / 2 + 1
+			}
 
-		for lj >= 0 && hj < n {
-			tlj := 0
-			thj := hj
-			for tlj <= lj {
-				if p[tlj] == p[thj] {
-					tlj++
-					thj++
-				} else {
+			for lj >= 0 && hj < n {
+				tlj := 0
+				thj := hj
+				for tlj <= lj {
+					if p[tlj] == p[thj] {
+						tlj++
+						thj++
+					} else {
+						break
+					}
+				}
+
+				if tlj > lj {
+					next[j] = lj + 1
 					break
+				} else {
+					lj--
+					hj++
 				}
 			}
-
-			if tlj > lj {
-				next[j] = lj + 1
-				break
-			} else {
-				lj--
-				hj++
-			}
 		}
-	}
 	*/
 
 	//直接用子字符串切割，子字符串比较
-	for j := n-1; j >= 2; j-- {
+	for j := n - 1; j >= 2; j-- {
 		for k := j / 2; k >= 0; k-- {
 			if p[0:k] == p[j-k:j] {
-				next[j]	= k
+				next[j] = k
 				break
 			}
 		}
@@ -83,5 +83,15 @@ func main() {
 	s := "addafdasjklf"
 	p := "dafdas"
 	i := kmp(s, p)
+	fmt.Printf("pos:%d\r\n", i)
+
+	s = "addafdasjklf"
+	p = "bdd"
+	i = kmp(s, p)
+	fmt.Printf("pos:%d\r\n", i)
+
+	s = "addafdasjklf"
+	p = "bdbd"
+	i = kmp(s, p)
 	fmt.Printf("pos:%d\r\n", i)
 }
