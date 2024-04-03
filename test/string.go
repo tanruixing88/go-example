@@ -35,6 +35,13 @@ v2.0`
 	fmt.Println(str)
 }
 
+func copyStr() {
+	str1 := "1234"
+	str2 := str1
+
+	fmt.Printf("str1Addr:%p str2Addr:%p\r\n", &str1, &str2)
+}
+
 func main() {
 	longStr()
 	s := "123456"
@@ -42,4 +49,5 @@ func main() {
 	fmt.Printf("s:%s", s)
 	string2byteListNoMemCopy()
 	printInt()
+	copyStr()
 }
