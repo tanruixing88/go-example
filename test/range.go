@@ -10,7 +10,7 @@ func rangeAddr() {
 	}
 
 	//输出最后一个，值为3, 若m的value是int类型，值复制，则为2
-	fmt.Printf("rangeAddr %d", *m[2])
+	fmt.Printf("rangeAddr %d m:%+v\r\n", *m[2], m)
 }
 
 func rangeKVAddr() {
