@@ -77,7 +77,22 @@ func printEmptyListStruct() {
 	fmt.Printf("print has list:%+v\r\n", hasList)
 }
 
+type NilType struct {
+	Name string
+}
+
+func (n *NilType) PrintNilTypeName() {
+	fmt.Printf("Name:%s", n.Name)
+}
+
+func printNil() {
+	//var n *NilType n为空是不可以的，运行会报错的。
+	n := &NilType{}
+	n.PrintNilTypeName()
+}
+
 func main() {
+	printNil()
 	printEmptyListStruct()
 	structEqual()
 

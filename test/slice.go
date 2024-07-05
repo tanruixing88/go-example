@@ -195,7 +195,18 @@ func changeSliceByFunc() {
 	fmt.Printf("finish all s:%+v saddr:%p\r\n", s, &s)
 }
 
+func testAppendMany() {
+	slice1 := []int{1, 2}
+	fmt.Printf("slice1 len:%d cap:%d\r\n", len(slice1), cap(slice1))
+	slice1 = append(slice1, 3, 4, 5)
+	fmt.Printf("slice1 append 3 elem. len:%d cap:%d\r\n", len(slice1), cap(slice1))
+	slice2 := []int{1, 2}
+	slice2 = append(slice2, []int{3, 4, 5}...)
+	fmt.Printf("slice2 append 3 elem. len:%d cap:%d\r\n", len(slice1), cap(slice1))
+}
+
 func main() {
+	testAppendMany()
 	changeSliceByFunc()
 	common()
 	testDeleteElemByIndex()

@@ -2,6 +2,16 @@ package main
 
 import "fmt"
 
+func rangeSlice() {
+	slice1 := []int{1, 2, 3}
+	slice2 := make([]int, 0)
+	for _, val := range slice1 {
+		slice2 = append(slice2, val)
+	}
+
+	fmt.Printf("slice2:%+v\r\n", slice2)
+}
+
 func rangeAddr() {
 	slice := []int{0, 1, 2, 3}
 	m := make(map[int]*int)
@@ -22,6 +32,7 @@ func rangeKVAddr() {
 }
 
 func main() {
+	rangeSlice()
 	rangeKVAddr()
 	rangeAddr()
 }

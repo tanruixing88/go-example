@@ -132,6 +132,16 @@ func rangeNilMap() {
 	fmt.Printf("rangeNilMap end\r\n")
 }
 
+type Student struct {
+	name string
+}
+
+func mapValProc() {
+	//m对应的类型必须是*Student指针类型，而不能是Student类型。
+	m := map[string]*Student{"people": {"zhoujielun"}}
+	m["people"].name = "wuyanzu"
+}
+
 func main() {
 	rangeNilMap()
 	delMapKeyInFunc()
