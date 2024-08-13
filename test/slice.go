@@ -205,7 +205,23 @@ func testAppendMany() {
 	fmt.Printf("slice2 append 3 elem. len:%d cap:%d\r\n", len(slice1), cap(slice1))
 }
 
+func appendOnly(s1 []int) {
+	s1 = append(s1, 3)
+}
+
+func testAppendOnly() {
+	s1 := []int{1, 2}
+	appendOnly(s1)
+	fmt.Printf("testAppendOnly s1:%+v \r\n", s1)
+	s2 := make([]int, 2, 10)
+	s2[0] = 1
+	s2[1] = 2
+	appendOnly(s2)
+	fmt.Printf("testAppendOnly s2:%+v \r\n", s1)
+}
+
 func main() {
+	testAppendOnly()
 	testAppendMany()
 	changeSliceByFunc()
 	common()
