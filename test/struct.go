@@ -11,6 +11,22 @@ type Server struct {
 	ServerIP   string `key2:"value2"`
 }
 
+func (s Server) ProcStruct() {
+	s.ServerName = "proc struct name"
+}
+
+func (s *Server) ProcPoint() {
+	s.ServerName = "proc point name"
+}
+
+func testProc() {
+	s1 := Server{ServerName: "server1", ServerIP: "0.0.0.0"}
+	s1.ProcStruct()
+	s2 := Server{ServerName: "server2", ServerIP: "0.0.0.0"}
+	s2.ProcPoint()
+	fmt.Printf("s1:%+v s2:%+v\r\n", s1, s2)
+}
+
 type AI interface {
 	Show()
 }
@@ -153,4 +169,5 @@ func main() {
 	//切片不能比较//fmt.Printf("[]string{'1'} == []string{'1'} cmp:%t\r\n", []string{"1"} == []string{"1"})
 
 	structNil()
+	testProc()
 }
