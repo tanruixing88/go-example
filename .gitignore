@@ -2,3 +2,4 @@
 .idea/vcs.xml
 .idea/go-example.iml
 java/.idea
+java/.gradle
