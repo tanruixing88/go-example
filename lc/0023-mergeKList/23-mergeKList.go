@@ -5,7 +5,7 @@ import (
 )
 
 type ListNode struct {
-	Val int
+	Val  int
 	Next *ListNode
 }
 
@@ -54,16 +54,6 @@ func mergeKLists(lists []*ListNode) *ListNode {
 	}
 
 	for addrH != nil {
-		/*
-		p := addrH
-		for p != nil {
-			fmt.Printf(" %d", p.Node.Val)
-			p = p.Next
-		}
-		fmt.Printf("\r\n")
-		 */
-
-
 		if addrH.Node.Next == nil {
 			curNode = addrH.Node
 			addrH = addrH.Next
@@ -100,10 +90,10 @@ func mergeKLists(lists []*ListNode) *ListNode {
 
 func main() {
 	lists1 := []*ListNode{
-			{1, &ListNode{4, &ListNode{5, nil}}},
-			{1, &ListNode{3, &ListNode{4, nil}}},
-			{2, &ListNode{6, nil}},
-		}
+		{1, &ListNode{4, &ListNode{5, nil}}},
+		{1, &ListNode{3, &ListNode{4, nil}}},
+		{2, &ListNode{6, nil}},
+	}
 	ret := mergeKLists(lists1)
 	fmt.Printf("list1 merge ret:")
 	i := 0
