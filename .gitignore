@@ -3,3 +3,4 @@
 .idea/go-example.iml
 java/.idea
 java/.gradle
+rust/example/target
