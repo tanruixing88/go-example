@@ -12,6 +12,40 @@ func reverseList(head *ListNode) *ListNode {
 		return head
 	}
 
+	h := reverseList(head.Next)
+	head.Next.Next = head
+	head.Next = nil
+
+	return h
+}
+
+func recursionReverseList(preNode *ListNode, curNode *ListNode) *ListNode {
+	if curNode == nil {
+		return preNode
+	}
+
+	nxtNode := curNode.Next
+	curNode.Next = preNode
+
+	return recursionReverseList(curNode, nxtNode)
+}
+
+func reverseList2(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+
+	h := recursionReverseList(head, head.Next)
+	head.Next = nil
+
+	return h
+}
+
+func reverseList1(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+
 	preNode := head
 	curNode := preNode.Next
 

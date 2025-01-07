@@ -4,3 +4,4 @@
 java/.idea
 java/.gradle
 rust/example/target
+rust/example/.idea
